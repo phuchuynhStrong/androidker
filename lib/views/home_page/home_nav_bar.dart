@@ -1,7 +1,10 @@
+import 'package:androiker/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:logger/logger.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:sized_context/sized_context.dart';
 
 class HomeNavBar extends StatelessWidget {
   final String? name;
@@ -13,24 +16,28 @@ class HomeNavBar extends StatelessWidget {
     if (url == null) {
       return;
     }
+
     canLaunch(url).then((value) {
       if (value) {
         launch(url);
       }
+    }).catchError((error) {
+      Logger().e("Can't launch URL: $error");
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    bool useVerticalLayout = context.widthPx < 700;
     return Container(
       padding: EdgeInsets.only(
-        top: 16.0,
+        top: Insets.lg,
       ),
       child: Row(
         children: [
           Container(
             margin: EdgeInsets.only(
-              right: 48,
+              right: Insets.xl,
             ),
             child: Text(
               name ?? "-",
@@ -50,29 +57,36 @@ class HomeNavBar extends StatelessWidget {
             ),
           ),
           Expanded(child: Container()),
-          IconButton(
-            icon: FaIcon(FontAwesomeIcons.facebook),
-            onPressed: () {
-              openUrl("https://www.facebook.com/phuc.huynh.280896/");
-            },
-          ),
-          IconButton(
-            icon: FaIcon(FontAwesomeIcons.linkedin),
-            onPressed: () {
-              openUrl("https://www.linkedin.com/in/phuchuynhstrong/");
-            },
-          ),
-          IconButton(
-            icon: FaIcon(FontAwesomeIcons.github),
-            onPressed: () {
-              openUrl("https://github.com/phuchuynhStrong");
-            },
-          ),
-          Icon(
-            Icons.menu,
-            size: 16,
-            color: Colors.white,
-          ),
+          if (!useVerticalLayout) ...[
+            IconButton(
+              icon: const FaIcon(FontAwesomeIcons.facebook),
+              iconSize: IconSizes.med,
+              color: Colors.white,
+              onPressed: () =>
+                  openUrl("https://www.facebook.com/phuc.huynh.280896/"),
+            ),
+            IconButton(
+              icon: const FaIcon(FontAwesomeIcons.linkedin),
+              iconSize: IconSizes.med,
+              color: Colors.white,
+              onPressed: () {
+                openUrl("https://www.linkedin.com/in/phuchuynhstrong/");
+              },
+            ),
+            IconButton(
+              icon: const FaIcon(FontAwesomeIcons.github),
+              color: Colors.white,
+              iconSize: IconSizes.med,
+              onPressed: () {
+                openUrl("https://github.com/phuchuynhStrong");
+              },
+            ),
+          ] else
+            const Icon(
+              Icons.menu,
+              size: IconSizes.med,
+              color: Colors.white,
+            ),
         ],
       ),
     );
