@@ -6,8 +6,7 @@ class NativeFirebaseService extends FirebaseService {
   @override
   Future<void> init() async {
     await Firebase.initializeApp().catchError((Object e) {
-      Logger().e("$e");
+      Logger().e("Firebase initialize failed: $e");
     });
-    print("InitComplete");
   }
 }
