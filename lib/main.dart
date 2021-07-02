@@ -45,8 +45,7 @@ class _AndroidkerAppState extends State<_AndroidkerApp> {
   @override
   void initState() {
     routingCubit = RoutingCubit();
-    router = AppRouterDelegate(routingCubit)
-      ..setInitialRoutePath(routingCubit.state);
+    router = AppRouterDelegate(routingCubit);
     super.initState();
   }
 
