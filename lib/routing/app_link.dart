@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:androiker/views/home_page/home_page.dart';
-import 'package:logger/logger.dart';
 
 // Inspired from flutter-folio
 class AppLink {
@@ -15,7 +14,7 @@ class AppLink {
   String? articleId;
 
   bool isInvalid() {
-    return pageId == null || articleId == null;
+    return pageId == null && articleId == null;
   }
 
   static AppLink initial() {
@@ -35,16 +34,19 @@ class AppLink {
   static AppLink fromLocation(String? location) {
     location = Uri.decodeFull(location ?? "");
     Map<String, String> params = Uri.parse(location).queryParameters;
+    // Handle paths
+    final paths = location.split('/')..removeWhere((path) => path.isEmpty);
     // Shared function to inject keys if they are not null
     void trySet(String key, void Function(String) setter) {
       if (params.containsKey(key)) setter.call(params[key]!);
     }
 
-    Logger().i("parse-fromLocation: $location");
     // Create the applink, inject any params we've found
     AppLink link = AppLink();
     trySet(AppLink.kArticleParam, (s) => link.articleId = s);
-    trySet(AppLink.kPageParam, (s) => link.pageId = s);
+    if (paths.isNotEmpty) {
+      link.pageId = paths.first;
+    }
     return link;
   }
 
