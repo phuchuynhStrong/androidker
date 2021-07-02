@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:androiker/routing/app_link.dart';
+import 'package:androiker/routing/app_pages.dart';
 import 'package:androiker/routing/cubit/routing_cubit.dart';
 import 'package:androiker/views/blog/blog_page.dart';
 import 'package:androiker/views/home_page/home_page.dart';
@@ -27,21 +28,21 @@ class AppRouterDelegate extends RouterDelegate<AppLink> with ChangeNotifier {
 
   @override
   Widget build(BuildContext context) {
-    final pageNotFound = currentConfiguration?.pageId == null ||
-        currentConfiguration!.pageId!.isEmpty;
-    final showBlog = currentConfiguration?.pageId == kBlogPageId;
-    final showHome = currentConfiguration?.pageId == kHomePageId;
+    final pageId = currentConfiguration?.pageId;
+    final pageNotFound = isPageNotFound(pageId);
+    final showBlog = pageId == AppPage.blog.name;
+    final showHome = pageId == AppPage.home.name;
     return Navigator(
       onPopPage: _handleNavigatorPop,
       pages: [
-        if (pageNotFound) ...[
-          const PageNotFound(),
+        if (showHome) ...[
+          const HomePage(),
         ],
         if (showBlog) ...[
           const BlogPage(),
         ],
-        if (showHome) ...[
-          const HomePage(),
+        if (pageNotFound) ...[
+          const PageNotFound(),
         ],
       ].map((e) => _wrapContentInPage(e)).toList(),
     );
@@ -60,6 +61,10 @@ class AppRouterDelegate extends RouterDelegate<AppLink> with ChangeNotifier {
 
   @override
   AppLink? get currentConfiguration {
+    if (routingCubit.state.isInvalid()) {
+      return AppLink.initial();
+    }
+
     return routingCubit.state;
   }
 
@@ -67,9 +72,16 @@ class AppRouterDelegate extends RouterDelegate<AppLink> with ChangeNotifier {
   Future<void> setNewRoutePath(AppLink configuration) async {
     final location = configuration.toLocation();
     Logger().i(location);
+    // In the worse case which configuration is invalid, route user
+    // to home page
     if (configuration.isInvalid() && currentConfiguration != null) {
       routingCubit.emit(AppLink.initial());
+      return;
     }
+
+    // Whenver the platform report a new route information, update
+    // cubit with the new configuration
+    routingCubit.emit(configuration);
   }
 
   Page _wrapContentInPage(Widget e) {
