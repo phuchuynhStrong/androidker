@@ -1,5 +1,7 @@
+import 'package:androiker/core_packages.dart';
 import 'package:androiker/resources/resources.dart';
 import 'package:androiker/routing/cubit/routing_cubit.dart';
+import 'package:androiker/views/cv/cv_viewer.dart';
 import 'package:androiker/views/home_page/home_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -112,6 +114,15 @@ class HomeContentTitleWidget extends StatelessWidget {
 class HomeContentSubtitleAndButton extends StatelessWidget {
   const HomeContentSubtitleAndButton({Key? key}) : super(key: key);
 
+  void onShowCvPressed(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const FullScreenDialog(child: AppCvViewer());
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -159,10 +170,12 @@ class HomeContentSubtitleAndButton extends StatelessWidget {
           ),
         ),
         TextButton(
-          onPressed: () {},
+          onPressed: () {
+            onShowCvPressed(context);
+          },
           child: RichText(
               text: TextSpan(
-            text: "Download CV ",
+            text: "The CV ",
             style: GoogleFonts.montserrat(
               color: Colors.red,
               fontSize: 14,
