@@ -55,6 +55,18 @@ class _AppCvViewerState extends State<AppCvViewer> {
                 loaded = true;
               });
             },
+            pageLoader: Stack(
+              alignment: Alignment.center,
+              children: [
+                SizedBox.fromSize(
+                  size: const Size(48, 48),
+                  child: const CircularProgressIndicator(
+                    color: Colors.white,
+                    strokeWidth: StrokeWidth.med,
+                  ),
+                ),
+              ],
+            ),
             onPageChanged: (val) {
               setState(() {
                 page = val;

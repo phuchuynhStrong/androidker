@@ -35,3 +35,8 @@ class Corners {
   static const BorderRadius mdBorder = BorderRadius.all(mdRadius);
   static const Radius mdRadius = Radius.circular(md);
 }
+
+class StrokeWidth {
+  static const double scale = 1;
+  static const double med = 4;
+}
