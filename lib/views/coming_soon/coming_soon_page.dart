@@ -35,7 +35,6 @@ class ComingSoonPage extends StatelessWidget {
         child: Column(
           children: <Widget>[
             const HomeNavBar(
-              name: "Phuc Huynh",
               email: "phuchuynh.strong@gmail.com",
             ),
             Container(

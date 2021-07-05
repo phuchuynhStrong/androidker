@@ -37,7 +37,6 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           children: const <Widget>[
             HomeNavBar(
-              name: "Phuc Huynh",
               email: "phuchuynh.strong@gmail.com",
             ),
             HomeContentWidget(),
