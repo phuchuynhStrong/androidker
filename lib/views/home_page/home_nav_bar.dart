@@ -1,42 +1,61 @@
+import 'package:androiker/resources/resources.dart';
+import 'package:androiker/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:logger/logger.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:sized_context/sized_context.dart';
 
 class HomeNavBar extends StatelessWidget {
-  final String? name;
   final String? email;
 
-  const HomeNavBar({Key? key, this.name, this.email}) : super(key: key);
+  const HomeNavBar({Key? key, this.email}) : super(key: key);
 
   void openUrl(String? url) {
     if (url == null) {
       return;
     }
+
     canLaunch(url).then((value) {
       if (value) {
         launch(url);
       }
+    }).catchError((error) {
+      Logger().e("Can't launch URL: $error");
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    bool useVerticalLayout = context.widthPx < 700;
     return Container(
       padding: EdgeInsets.only(
-        top: 16.0,
+        top: Insets.lg,
       ),
       child: Row(
         children: [
           Container(
             margin: EdgeInsets.only(
-              right: 48,
+              right: Insets.sm,
+            ),
+            child: SvgPicture.asset(
+              Svgs.androidker,
+              width: 48,
+              height: 48,
+              color: Colors.white,
+              fit: BoxFit.cover,
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(
+              right: Insets.sm,
             ),
             child: Text(
-              name ?? "-",
+              "|",
               style: GoogleFonts.montserrat(
                 fontSize: 20,
-                fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
             ),
@@ -50,29 +69,36 @@ class HomeNavBar extends StatelessWidget {
             ),
           ),
           Expanded(child: Container()),
-          IconButton(
-            icon: FaIcon(FontAwesomeIcons.facebook),
-            onPressed: () {
-              openUrl("https://www.facebook.com/phuc.huynh.280896/");
-            },
-          ),
-          IconButton(
-            icon: FaIcon(FontAwesomeIcons.linkedin),
-            onPressed: () {
-              openUrl("https://www.linkedin.com/in/phuchuynhstrong/");
-            },
-          ),
-          IconButton(
-            icon: FaIcon(FontAwesomeIcons.github),
-            onPressed: () {
-              openUrl("https://github.com/phuchuynhStrong");
-            },
-          ),
-          Icon(
-            Icons.menu,
-            size: 16,
-            color: Colors.white,
-          ),
+          if (!useVerticalLayout) ...[
+            IconButton(
+              icon: const FaIcon(FontAwesomeIcons.facebook),
+              iconSize: IconSizes.med,
+              color: Colors.white,
+              onPressed: () =>
+                  openUrl("https://www.facebook.com/phuc.huynh.280896/"),
+            ),
+            IconButton(
+              icon: const FaIcon(FontAwesomeIcons.linkedin),
+              iconSize: IconSizes.med,
+              color: Colors.white,
+              onPressed: () {
+                openUrl("https://www.linkedin.com/in/phuchuynhstrong/");
+              },
+            ),
+            IconButton(
+              icon: const FaIcon(FontAwesomeIcons.github),
+              color: Colors.white,
+              iconSize: IconSizes.med,
+              onPressed: () {
+                openUrl("https://github.com/phuchuynhStrong");
+              },
+            ),
+          ] else
+            const Icon(
+              Icons.menu,
+              size: IconSizes.med,
+              color: Colors.white,
+            ),
         ],
       ),
     );

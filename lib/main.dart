@@ -1,19 +1,19 @@
 import 'package:androiker/_utils/logger.dart';
-import 'package:androiker/resources/resources.dart';
+import 'package:androiker/routing/app_route_parser.dart';
+import 'package:androiker/routing/app_router.dart';
 import 'package:androiker/services/firebase/firebase_service.dart';
-import 'package:androiker/views/home_page/home_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'routing/cubit/routing_cubit.dart';
 
 void main() async {
   initLogger(() async {
     // TODO: Why we have to use this ?
     // Status bar style on Android/iOS
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle());
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle());
 
     if (kIsWeb) {
       // Increase Skia cache size to support bigger images.
@@ -24,9 +24,9 @@ void main() async {
       await Future<void>.delayed(Duration.zero);
     }
 
-    FirebaseService service = FirebaseFactory.create();
+    FirebaseFactory.create();
 
-    runApp(_AndroidkerApp());
+    runApp(const _AndroidkerApp());
   });
 }
 
@@ -38,10 +38,26 @@ class _AndroidkerApp extends StatefulWidget {
 }
 
 class _AndroidkerAppState extends State<_AndroidkerApp> {
+  AppRouteParser appRouteParser = AppRouteParser();
+  late AppRouterDelegate router;
+  late RoutingCubit routingCubit;
+
+  @override
+  void initState() {
+    routingCubit = RoutingCubit();
+    router = AppRouterDelegate(routingCubit);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: HomePage(),
+    return BlocProvider(
+      create: (context) => routingCubit,
+      child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        routeInformationParser: appRouteParser,
+        routerDelegate: router,
+      ),
     );
   }
 }
