@@ -1,5 +1,7 @@
+import 'package:androiker/resources/resources.dart';
 import 'package:androiker/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:logger/logger.dart';
@@ -7,10 +9,9 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:sized_context/sized_context.dart';
 
 class HomeNavBar extends StatelessWidget {
-  final String? name;
   final String? email;
 
-  const HomeNavBar({Key? key, this.name, this.email}) : super(key: key);
+  const HomeNavBar({Key? key, this.email}) : super(key: key);
 
   void openUrl(String? url) {
     if (url == null) {
@@ -37,13 +38,24 @@ class HomeNavBar extends StatelessWidget {
         children: [
           Container(
             margin: EdgeInsets.only(
-              right: Insets.xl,
+              right: Insets.sm,
+            ),
+            child: SvgPicture.asset(
+              Svgs.androidker,
+              width: 48,
+              height: 48,
+              color: Colors.white,
+              fit: BoxFit.cover,
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(
+              right: Insets.sm,
             ),
             child: Text(
-              name ?? "-",
+              "|",
               style: GoogleFonts.montserrat(
                 fontSize: 20,
-                fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
             ),

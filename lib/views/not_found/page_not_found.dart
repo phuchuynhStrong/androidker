@@ -24,7 +24,6 @@ class PageNotFound extends StatelessWidget {
         child: Column(
           children: const <Widget>[
             HomeNavBar(
-              name: "Phuc Huynh",
               email: "phuchuynh.strong@gmail.com",
             ),
           ],
