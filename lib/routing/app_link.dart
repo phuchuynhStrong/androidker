@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:androiker/views/home_page/home_page.dart';
+import 'package:androiker/routing/app_pages.dart';
 
 // Inspired from flutter-folio
 class AppLink {
@@ -18,7 +18,7 @@ class AppLink {
   }
 
   static AppLink initial() {
-    return AppLink(pageId: kHomePageId);
+    return AppLink(pageId: AppPage.splash.name);
   }
 
   static String? encode(String? s) {

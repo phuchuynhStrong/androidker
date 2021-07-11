@@ -41,6 +41,7 @@ dependencies:
   bloc: ^7.0.0
   flutter_bloc: ^7.0.0
   flutter_svg: ^0.22.0
+  rive: ^0.7.22
 
 dependency_overrides:
   photo_view:
@@ -68,6 +69,7 @@ flutter:
     - assets/images/
     - assets/raw/
     - assets/vectors/
+    - assets/rive/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
