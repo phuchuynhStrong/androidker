@@ -1,4 +1,4 @@
-import 'package:androiker/resources/resources.dart';
+import 'package:androiker/core_packages.dart';
 import 'package:androiker/views/home_page/home_nav_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -10,23 +10,18 @@ class PageNotFound extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(Images.testBackground),
-            fit: BoxFit.cover,
-            colorFilter: ColorFilter.mode(Colors.black54, BlendMode.darken),
+      body: BackgroundContainer(
+        child: Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: Insets.xl,
           ),
-        ),
-        padding: EdgeInsets.symmetric(
-          horizontal: Insets.xl,
-        ),
-        child: Column(
-          children: const <Widget>[
-            HomeNavBar(
-              email: "phuchuynh.strong@gmail.com",
-            ),
-          ],
+          child: Column(
+            children: const <Widget>[
+              HomeNavBar(
+                email: "phuchuynh.strong@gmail.com",
+              ),
+            ],
+          ),
         ),
       ),
     );

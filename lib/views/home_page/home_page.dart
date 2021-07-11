@@ -1,5 +1,4 @@
 import 'package:androiker/core_packages.dart';
-import 'package:androiker/resources/resources.dart';
 import 'package:androiker/routing/cubit/routing_cubit.dart';
 import 'package:androiker/views/cv/cv_viewer.dart';
 import 'package:androiker/views/home_page/home_nav_bar.dart';
@@ -23,24 +22,19 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(Images.testBackground),
-            fit: BoxFit.cover,
-            colorFilter: ColorFilter.mode(Colors.black54, BlendMode.darken),
+      body: BackgroundContainer(
+        child: Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: Insets.xl,
           ),
-        ),
-        padding: EdgeInsets.symmetric(
-          horizontal: Insets.xl,
-        ),
-        child: Column(
-          children: const <Widget>[
-            HomeNavBar(
-              email: "phuchuynh.strong@gmail.com",
-            ),
-            HomeContentWidget(),
-          ],
+          child: Column(
+            children: const <Widget>[
+              HomeNavBar(
+                email: "phuchuynh.strong@gmail.com",
+              ),
+              HomeContentWidget(),
+            ],
+          ),
         ),
       ),
     );
