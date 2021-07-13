@@ -3,7 +3,6 @@ import 'package:androiker/routing/app_link.dart';
 import 'package:androiker/routing/app_pages.dart';
 import 'package:androiker/routing/bloc/routing_bloc.dart';
 import 'package:androiker/views/cv/cv_viewer.dart';
-import 'package:androiker/views/home_page/home_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -23,26 +22,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Title(
-        color: Colors.blue,
-        title: "Androidker Folio",
-        child: BackgroundContainer(
-          child: Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: Insets.xl,
-            ),
-            child: Column(
-              children: const <Widget>[
-                HomeNavBar(
-                  email: "phuchuynh.strong@gmail.com",
-                ),
-                HomeContentWidget(),
-              ],
-            ),
-          ),
-        ),
-      ),
+    return const AndroidkerScaffold(
+      body: HomeContentWidget(),
     );
   }
 }
