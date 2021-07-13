@@ -9,8 +9,9 @@ enum AppPage {
 extension AppPageName on AppPage {
   String get name {
     switch (this) {
-      case AppPage.home:
+      case AppPage.splash:
         return '';
+      case AppPage.home:
       case AppPage.blog:
       case AppPage.showcase:
       case AppPage.splash:

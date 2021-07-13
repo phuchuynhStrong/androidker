@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:androiker/routing/app_link.dart';
 import 'package:androiker/routing/app_page.dart';
 import 'package:androiker/routing/app_pages.dart';
-import 'package:androiker/routing/cubit/routing_cubit.dart';
+import 'package:androiker/routing/bloc/routing_bloc.dart';
+import 'package:androiker/routing/bloc/routing_state.dart';
 import 'package:androiker/views/blog/blog_page.dart';
 import 'package:androiker/views/home_page/home_page.dart';
 import 'package:androiker/views/not_found/page_not_found.dart';
@@ -13,11 +14,11 @@ import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
 class AppRouterDelegate extends RouterDelegate<AppLink> with ChangeNotifier {
-  final RoutingCubit routingCubit;
-  late final StreamSubscription<AppLink> _routingChangeSub;
+  final RoutingBloc routingBloc;
+  late final StreamSubscription<RoutingState> _routingChangeSub;
 
-  AppRouterDelegate(this.routingCubit) {
-    _routingChangeSub = routingCubit.stream.listen((event) {
+  AppRouterDelegate(this.routingBloc) {
+    _routingChangeSub = routingBloc.stream.listen((event) {
       notifyListeners();
     });
   }
@@ -30,11 +31,12 @@ class AppRouterDelegate extends RouterDelegate<AppLink> with ChangeNotifier {
 
   @override
   Widget build(BuildContext context) {
+    final pageEnum = currentConfiguration?.getAppPageEnum();
     final pageId = currentConfiguration?.pageId;
     final pageNotFound = isPageNotFound(pageId);
-    final showBlog = pageId == AppPage.blog.name;
-    final showHome = pageId == AppPage.home.name;
-    final showSplash = pageId == AppPage.splash.name;
+    final showBlog = pageEnum == AppPage.blog;
+    final showHome = pageEnum == AppPage.home;
+    final showSplash = pageEnum == AppPage.splash;
     return Navigator(
       onPopPage: _handleNavigatorPop,
       pages: [
@@ -67,11 +69,18 @@ class AppRouterDelegate extends RouterDelegate<AppLink> with ChangeNotifier {
 
   @override
   AppLink? get currentConfiguration {
-    if (routingCubit.state.isInvalid()) {
+    final appLink = AppLink.fromLocation(routingBloc.state.location);
+    if (appLink.isInvalid()) {
       return AppLink.initial();
     }
 
-    return routingCubit.state;
+    return appLink;
+  }
+
+  @override
+  Future<void> setInitialRoutePath(AppLink configuration) {
+    Logger().i("setInitialRoutePath - ${configuration.pageId}");
+    return setNewRoutePath(configuration);
   }
 
   @override
@@ -81,13 +90,13 @@ class AppRouterDelegate extends RouterDelegate<AppLink> with ChangeNotifier {
     // In the worse case which configuration is invalid, route user
     // to home page
     if (configuration.isInvalid() && currentConfiguration != null) {
-      routingCubit.emit(AppLink.initial());
+      routingBloc.navigate(AppLink.initial());
       return;
     }
 
     // Whenver the platform report a new route information, update
     // cubit with the new configuration
-    routingCubit.emit(configuration);
+    routingBloc.navigate(configuration);
   }
 
   Page _wrapContentInPage(Widget e) {

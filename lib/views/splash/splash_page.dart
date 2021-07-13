@@ -1,5 +1,7 @@
 import 'package:androiker/resources/resources.dart';
-import 'package:androiker/routing/cubit/routing_cubit.dart';
+import 'package:androiker/routing/app_link.dart';
+import 'package:androiker/routing/app_pages.dart';
+import 'package:androiker/routing/bloc/routing_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
@@ -19,7 +21,11 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     _controller = OneShotAnimation('Splash', autoplay: true, onStop: () {
-      context.read<RoutingCubit>().home();
+      context.read<RoutingBloc>().navigate(
+            AppLink(
+              pageId: AppPage.home.name,
+            ),
+          );
     });
     super.initState();
   }

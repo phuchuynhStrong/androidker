@@ -12,9 +12,16 @@ class AppLink {
   AppLink({this.pageId, this.articleId});
   String? pageId;
   String? articleId;
+  AppPage? appPage;
 
   bool isInvalid() {
     return pageId == null && articleId == null;
+  }
+
+  AppPage getAppPageEnum() {
+    appPage ??= AppPage.values.firstWhere((item) => item.name == pageId,
+        orElse: () => AppPage.notFound);
+    return appPage!;
   }
 
   static AppLink initial() {
@@ -47,7 +54,29 @@ class AppLink {
     if (paths.isNotEmpty) {
       link.pageId = paths.first;
     }
+
+    if (paths.isEmpty) {
+      link.pageId = '';
+    }
     return link;
+  }
+
+  String toRawLocation() {
+    String addKeyValPair({
+      required String key,
+      String? value,
+      bool hideKey = false,
+      bool appendAlt = true,
+    }) =>
+        value == null
+            ? ""
+            : "${hideKey ? "" : '=$key'}$value${appendAlt ? '&' : ''}";
+    String loc = "/";
+    loc += addKeyValPair(key: kArticleParam, value: articleId);
+    loc += addKeyValPair(
+        key: kPageParam, value: pageId, hideKey: true, appendAlt: false);
+
+    return Uri.encodeFull(loc);
   }
 
   String toLocation() {
@@ -62,8 +91,18 @@ class AppLink {
             : "${hideKey ? "" : '=$key'}$value${appendAlt ? '&' : ''}";
     String loc = "/";
     loc += addKeyValPair(key: kArticleParam, value: articleId);
-    loc += addKeyValPair(
-        key: kPageParam, value: pageId, hideKey: true, appendAlt: false);
+
+    if (!_shouldHidePath(pageId)) {
+      loc += addKeyValPair(
+          key: kPageParam, value: pageId, hideKey: true, appendAlt: false);
+    }
+
     return Uri.encodeFull(loc);
+  }
+
+  /// Hide the path ([pageId]) when it's home page because [SplashPage]
+  /// already have the empty path id.
+  static bool _shouldHidePath(String? pageId) {
+    return pageId == AppPage.home.name;
   }
 }

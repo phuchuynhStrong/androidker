@@ -1,5 +1,7 @@
 import 'package:androiker/core_packages.dart';
-import 'package:androiker/routing/cubit/routing_cubit.dart';
+import 'package:androiker/routing/app_link.dart';
+import 'package:androiker/routing/app_pages.dart';
+import 'package:androiker/routing/bloc/routing_bloc.dart';
 import 'package:androiker/views/cv/cv_viewer.dart';
 import 'package:androiker/views/home_page/home_nav_bar.dart';
 import 'package:flutter/material.dart';
@@ -22,18 +24,22 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BackgroundContainer(
-        child: Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: Insets.xl,
-          ),
-          child: Column(
-            children: const <Widget>[
-              HomeNavBar(
-                email: "phuchuynh.strong@gmail.com",
-              ),
-              HomeContentWidget(),
-            ],
+      body: Title(
+        color: Colors.blue,
+        title: "Androidker Folio",
+        child: BackgroundContainer(
+          child: Container(
+            padding: EdgeInsets.symmetric(
+              horizontal: Insets.xl,
+            ),
+            child: Column(
+              children: const <Widget>[
+                HomeNavBar(
+                  email: "phuchuynh.strong@gmail.com",
+                ),
+                HomeContentWidget(),
+              ],
+            ),
           ),
         ),
       ),
@@ -215,7 +221,11 @@ class HomePrimaryButtons extends StatelessWidget {
       children: [
         ElevatedButton(
           onPressed: () {
-            context.read<RoutingCubit>().blog();
+            context.read<RoutingBloc>().navigate(
+                  AppLink(
+                    pageId: AppPage.blog.name,
+                  ),
+                );
           },
           style: ButtonStyle(
             backgroundColor: kHomePrimaryButtonColor,
