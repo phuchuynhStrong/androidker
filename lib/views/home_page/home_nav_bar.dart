@@ -1,11 +1,11 @@
+import 'package:androiker/_utils/layout.dart';
+import 'package:androiker/_utils/navigation.dart';
 import 'package:androiker/resources/resources.dart';
 import 'package:androiker/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:logger/logger.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:sized_context/sized_context.dart';
 
 class HomeNavBar extends StatelessWidget {
@@ -13,23 +13,9 @@ class HomeNavBar extends StatelessWidget {
 
   const HomeNavBar({Key? key, this.email}) : super(key: key);
 
-  void openUrl(String? url) {
-    if (url == null) {
-      return;
-    }
-
-    canLaunch(url).then((value) {
-      if (value) {
-        launch(url);
-      }
-    }).catchError((error) {
-      Logger().e("Can't launch URL: $error");
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    bool useVerticalLayout = context.widthPx < 700;
+    bool useVerticalLayout = LayoutUtils.useVerticalLayout(context.widthPx);
     return Container(
       padding: EdgeInsets.only(
         top: Insets.lg,
@@ -60,12 +46,15 @@ class HomeNavBar extends StatelessWidget {
               ),
             ),
           ),
-          Text(
-            email ?? "-",
-            style: GoogleFonts.montserrat(
-              fontSize: 11,
-              fontWeight: FontWeight.w500,
-              color: Colors.white,
+          Flexible(
+            child: Text(
+              email ?? "-",
+              overflow: TextOverflow.ellipsis,
+              style: GoogleFonts.montserrat(
+                fontSize: 11,
+                fontWeight: FontWeight.w500,
+                color: Colors.white,
+              ),
             ),
           ),
           Expanded(child: Container()),
@@ -74,15 +63,16 @@ class HomeNavBar extends StatelessWidget {
               icon: const FaIcon(FontAwesomeIcons.facebook),
               iconSize: IconSizes.med,
               color: Colors.white,
-              onPressed: () =>
-                  openUrl("https://www.facebook.com/phuc.huynh.280896/"),
+              onPressed: () => NavigationUtils.openUrl(
+                  "https://www.facebook.com/phuc.huynh.280896/"),
             ),
             IconButton(
               icon: const FaIcon(FontAwesomeIcons.linkedin),
               iconSize: IconSizes.med,
               color: Colors.white,
               onPressed: () {
-                openUrl("https://www.linkedin.com/in/phuchuynhstrong/");
+                NavigationUtils.openUrl(
+                    "https://www.linkedin.com/in/phuchuynhstrong/");
               },
             ),
             IconButton(
@@ -90,14 +80,27 @@ class HomeNavBar extends StatelessWidget {
               color: Colors.white,
               iconSize: IconSizes.med,
               onPressed: () {
-                openUrl("https://github.com/phuchuynhStrong");
+                NavigationUtils.openUrl("https://github.com/phuchuynhStrong");
+              },
+            ),
+            IconButton(
+              icon: const FaIcon(FontAwesomeIcons.cog),
+              color: Colors.white,
+              iconSize: IconSizes.med,
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
               },
             ),
           ] else
-            const Icon(
-              Icons.menu,
-              size: IconSizes.med,
-              color: Colors.white,
+            IconButton(
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+              icon: const Icon(
+                Icons.menu,
+                size: IconSizes.med,
+                color: Colors.white,
+              ),
             ),
         ],
       ),
