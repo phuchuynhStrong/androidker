@@ -8,10 +8,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sized_context/sized_context.dart';
 
+const _kLeadingMaxHeight = 48.0;
+const _kSignatureIconSize = 48.0;
+
 class HomeNavBar extends StatelessWidget {
   final String? email;
+  final Widget? leading;
 
-  const HomeNavBar({Key? key, this.email}) : super(key: key);
+  const HomeNavBar({Key? key, this.email, this.leading}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,42 +26,54 @@ class HomeNavBar extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Container(
-            margin: EdgeInsets.only(
-              right: Insets.sm,
-            ),
-            child: SvgPicture.asset(
-              Svgs.androidker,
-              width: 48,
-              height: 48,
-              color: Colors.white,
-              fit: BoxFit.cover,
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(
-              right: Insets.sm,
-            ),
-            child: Text(
-              "|",
-              style: GoogleFonts.montserrat(
-                fontSize: 20,
-                color: Colors.white,
+          if (leading != null) ...[
+            Expanded(
+              child: Container(
+                alignment: Alignment.centerLeft,
+                height: _kLeadingMaxHeight,
+                child: leading!,
               ),
             ),
-          ),
-          Flexible(
-            child: Text(
-              email ?? "-",
-              overflow: TextOverflow.ellipsis,
-              style: GoogleFonts.montserrat(
-                fontSize: 11,
-                fontWeight: FontWeight.w500,
+          ] else ...[
+            // Androidker signature leading
+            Container(
+              margin: EdgeInsets.only(
+                right: Insets.sm,
+              ),
+              child: SvgPicture.asset(
+                Svgs.androidker,
+                width: _kSignatureIconSize,
+                height: _kSignatureIconSize,
                 color: Colors.white,
+                fit: BoxFit.cover,
               ),
             ),
-          ),
-          Expanded(child: Container()),
+            Container(
+              margin: EdgeInsets.only(
+                right: Insets.sm,
+              ),
+              child: Text(
+                "|",
+                style: GoogleFonts.montserrat(
+                  fontSize: 20,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            Expanded(
+              child: Text(
+                email ?? "-",
+                overflow: TextOverflow.ellipsis,
+                style: GoogleFonts.montserrat(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ],
+
+          // Androidker signature leading
           if (!useVerticalLayout) ...[
             IconButton(
               icon: const FaIcon(FontAwesomeIcons.facebook),

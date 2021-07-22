@@ -6,8 +6,14 @@ class SidebarItem extends StatelessWidget {
   final Widget? prefix;
   final String? title;
   final VoidCallback? onPressed;
-  const SidebarItem({Key? key, this.prefix, this.title, this.onPressed})
-      : super(key: key);
+  final bool isActive;
+  const SidebarItem({
+    Key? key,
+    this.prefix,
+    this.title,
+    this.onPressed,
+    this.isActive = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +24,9 @@ class SidebarItem extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(Insets.lg),
         width: double.infinity,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           borderRadius: Corners.mdBorder,
+          color: isActive ? Colors.black : Colors.transparent,
         ),
         child: Row(
           children: [
