@@ -7,6 +7,7 @@ import '../core_packages.dart';
 class AndroidkerScaffold extends StatelessWidget {
   final Widget? body;
   final Widget? drawer;
+  final Widget? customAppBarLeading;
 
   final String? windowTitleText;
   final Color? windowTitleColor;
@@ -16,6 +17,7 @@ class AndroidkerScaffold extends StatelessWidget {
     this.drawer,
     this.windowTitleText,
     this.windowTitleColor,
+    this.customAppBarLeading,
   }) : super(key: key);
 
   @override
@@ -31,9 +33,11 @@ class AndroidkerScaffold extends StatelessWidget {
               horizontal: Insets.xl,
             ),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                const HomeNavBar(
+                HomeNavBar(
                   email: "phuchuynh.strong@gmail.com",
+                  leading: customAppBarLeading,
                 ),
                 if (body != null) ...[body!]
               ],

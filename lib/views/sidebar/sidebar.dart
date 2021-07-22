@@ -2,6 +2,7 @@ import 'package:androiker/_utils/layout.dart';
 import 'package:androiker/_utils/navigation.dart';
 import 'package:androiker/resources/resources.dart';
 import 'package:androiker/styles.dart';
+import 'package:androiker/views/sidebar/sidebar_settings_item.dart';
 import 'package:flutter/material.dart';
 import 'package:androiker/core_packages.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -115,14 +116,7 @@ class AndroidkerSidebar extends StatelessWidget {
               ),
               const SidebarSectionDivider(),
             ],
-            const SidebarItem(
-              prefix: FaIcon(
-                FontAwesomeIcons.cogs,
-                color: Colors.white,
-                size: 16,
-              ),
-              title: "Settings",
-            ),
+            const SidebarSettingsItem(),
           ],
         ),
       ),

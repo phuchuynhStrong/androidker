@@ -8,6 +8,7 @@ import 'package:androiker/routing/bloc/routing_state.dart';
 import 'package:androiker/views/blog/blog_page.dart';
 import 'package:androiker/views/home_page/home_page.dart';
 import 'package:androiker/views/not_found/page_not_found.dart';
+import 'package:androiker/views/settings/settings_page.dart';
 import 'package:androiker/views/splash/splash_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +38,7 @@ class AppRouterDelegate extends RouterDelegate<AppLink> with ChangeNotifier {
     final showBlog = pageEnum == AppPage.blog;
     final showHome = pageEnum == AppPage.home;
     final showSplash = pageEnum == AppPage.splash;
+    final showSettings = pageEnum == AppPage.settings;
     return Navigator(
       onPopPage: _handleNavigatorPop,
       pages: [
@@ -49,6 +51,9 @@ class AppRouterDelegate extends RouterDelegate<AppLink> with ChangeNotifier {
         if (showBlog) ...[
           const BlogPage(),
         ],
+        if (showSettings) ...[
+          const SettingsPage(),
+        ],
         if (pageNotFound) ...[
           const PageNotFound(),
         ],
@@ -56,15 +61,29 @@ class AppRouterDelegate extends RouterDelegate<AppLink> with ChangeNotifier {
     );
   }
 
-  @override
-  Future<bool> popRoute() async {
+  bool tryGoBack() {
+    Logger().i("Try go back");
+    if (currentConfiguration?.appPage != AppPage.splash) {
+      routingBloc.navigate(AppLink(pageId: AppPage.home.name));
+      return true;
+    }
     return false;
   }
 
-  // Handle Navigator.pop for any routes in our stack
+  // This is only triggered from back button in Android (maybe iOS)
+  // Back/Forward in Web doesn't count.
+  @override
+  Future<bool> popRoute() async {
+    return SynchronousFuture(tryGoBack());
+  }
+
+  // Handle Navigator.pop for any routes in our stack.
   bool _handleNavigatorPop(Route<dynamic> route, dynamic result) {
     // Ask the route if it can handle pop internally...
-    return route.didPop(result);
+    if (route.didPop(result)) {
+      return tryGoBack();
+    }
+    return false;
   }
 
   @override
