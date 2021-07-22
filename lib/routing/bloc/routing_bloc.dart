@@ -25,6 +25,11 @@ class RoutingBloc extends Bloc<RoutingEvent, RoutingState> {
 
   void navigate(AppLink appLink) => add(RoutingEvent(appLink));
 
+  AppPage getCurrentPageEnum() {
+    final appLink = AppLink.fromLocation(state.location);
+    return appLink.getAppPageEnum();
+  }
+
   bool _needToUpdateRouter(AppLink event) {
     final current = AppLink.fromLocation(state.location);
     return current.pageId == "" ||
