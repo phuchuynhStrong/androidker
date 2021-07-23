@@ -204,6 +204,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
+  enum_to_string:
+    dependency: "direct main"
+    description:
+      name: enum_to_string
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.1"
   extension:
     dependency: transitive
     description:
@@ -586,12 +593,10 @@ packages:
   photo_view:
     dependency: "direct overridden"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: c999e806fd7563239c831034fce3fd6f56770457
-      url: "https://github.com/phuchuynhStrong/photo_view.git"
-    source: git
-    version: "0.11.1"
+      name: photo_view
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.12.0"
   platform:
     dependency: transitive
     description:

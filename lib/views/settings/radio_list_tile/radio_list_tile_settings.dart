@@ -1,4 +1,5 @@
 import 'package:androiker/_utils/enum.dart';
+import 'package:androiker/di/module/app_settings.dart';
 import 'package:androiker/views/settings/settings_item_data.dart';
 import 'package:flutter/material.dart';
 
@@ -14,10 +15,12 @@ class RadioListTileSetting<T> extends StatefulWidget {
 }
 
 class _RadioListTileSettingState<T> extends State<RadioListTileSetting<T>> {
-  T? _current;
+  T? current;
 
   @override
   Widget build(BuildContext context) {
+    final appSetting = Provider.of<AppSettings>(context);
+    final currentSettingValue = appSetting.getCurrentSetting<T>();
     final values = widget.data?.values;
     if (values == null || values.isEmpty) {
       return const SizedBox();
@@ -39,7 +42,6 @@ class _RadioListTileSettingState<T> extends State<RadioListTileSetting<T>> {
                   contentPadding: EdgeInsets.only(
                     right: Insets.lg,
                   ),
-                  selected: _current == value,
                   activeColor: Colors.white,
                   title: Text(
                     EnumUtils.getCapitalizedEnumName(value.toString()) ?? "-",
@@ -50,11 +52,12 @@ class _RadioListTileSettingState<T> extends State<RadioListTileSetting<T>> {
                     ),
                   ),
                   value: value,
-                  groupValue: _current,
+                  groupValue: current ?? currentSettingValue,
                   onChanged: (val) {
                     setState(() {
-                      _current = val;
+                      current = val;
                     });
+                    appSetting.handleSettingChanged(val);
                   },
                 );
               },
