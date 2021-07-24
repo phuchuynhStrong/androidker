@@ -5,3 +5,5 @@ export 'background_container.dart';
 export 'androidker_scaffold.dart';
 export 'sidebar/sidebar_divider.dart';
 export 'sidebar/sidebar_item.dart';
+export 'styled_header.dart';
+export 'styled_sub_header.dart';
