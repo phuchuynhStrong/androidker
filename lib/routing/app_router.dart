@@ -6,6 +6,7 @@ import 'package:androiker/routing/app_pages.dart';
 import 'package:androiker/routing/bloc/routing_bloc.dart';
 import 'package:androiker/routing/bloc/routing_state.dart';
 import 'package:androiker/views/blog/blog_page.dart';
+import 'package:androiker/views/editor/editor_page.dart';
 import 'package:androiker/views/home_page/home_page.dart';
 import 'package:androiker/views/not_found/page_not_found.dart';
 import 'package:androiker/views/settings/settings_page.dart';
@@ -39,6 +40,7 @@ class AppRouterDelegate extends RouterDelegate<AppLink> with ChangeNotifier {
     final showHome = pageEnum == AppPage.home;
     final showSplash = pageEnum == AppPage.splash;
     final showSettings = pageEnum == AppPage.settings;
+    final showEditor = pageEnum == AppPage.editor;
     return Navigator(
       onPopPage: _handleNavigatorPop,
       pages: [
@@ -50,6 +52,9 @@ class AppRouterDelegate extends RouterDelegate<AppLink> with ChangeNotifier {
         ],
         if (showBlog) ...[
           const BlogPage(),
+        ],
+        if (showEditor) ...[
+          const EditorPage(),
         ],
         if (showSettings) ...[
           const SettingsPage(),
