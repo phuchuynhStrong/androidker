@@ -59,15 +59,6 @@ void main() async {
         ),
       ),
     );
-
-    // runApp(
-    //   Provider<AppComponent>(
-    //     create: (_) => appComponent,
-    //     child: _AndroidkerApp(
-    //       appComponent: appComponent,
-    //     ),
-    //   ),
-    // );
   });
 }
 
@@ -109,17 +100,28 @@ class _AndroidkerAppState extends State<_AndroidkerApp> {
 
   @override
   Widget build(BuildContext context) {
-    AppTheme appTheme =
+    AppTheme appSettings =
         context.select((AppSettings settings) => settings.theme);
+    double textScaleFactor =
+        context.select((AppSettings settings) => settings.textScaleFactor);
     return BlocProvider(
       create: (context) => routingBloc,
       child: MaterialApp.router(
         title: "Androidker Folio",
-        color: appTheme.primary,
+        color: appSettings.primary,
         debugShowCheckedModeBanner: false,
         routeInformationParser: appRouteParser,
         routerDelegate: router,
-        theme: appTheme.toThemeData(),
+        theme: appSettings.toThemeData(),
+        builder: (context, child) {
+          final data = MediaQuery.of(context);
+          return MediaQuery(
+            data: data.copyWith(
+              textScaleFactor: textScaleFactor,
+            ),
+            child: child!,
+          );
+        },
       ),
     );
   }
