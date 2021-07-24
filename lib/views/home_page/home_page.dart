@@ -41,6 +41,7 @@ class HomeContentTitleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -50,7 +51,7 @@ class HomeContentTitleWidget extends StatelessWidget {
             style: GoogleFonts.montserrat(
               fontSize: 40,
               fontWeight: FontWeight.bold,
-              color: Colors.white,
+              color: theme.colorScheme.onBackground,
             ),
             children: [
               const TextSpan(
@@ -72,7 +73,7 @@ class HomeContentTitleWidget extends StatelessWidget {
             style: GoogleFonts.montserrat(
               fontSize: 40,
               fontWeight: FontWeight.bold,
-              color: Colors.white,
+              color: theme.colorScheme.onBackground,
             ),
             children: [
               TextSpan(
@@ -80,7 +81,7 @@ class HomeContentTitleWidget extends StatelessWidget {
                 style: GoogleFonts.montserrat(
                   fontSize: 19,
                   fontWeight: FontWeight.w500,
-                  color: Colors.white,
+                  color: theme.colorScheme.onBackground,
                 ),
               )
             ],
@@ -105,6 +106,7 @@ class HomeContentSubtitleAndButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -130,7 +132,7 @@ class HomeContentSubtitleAndButton extends StatelessWidget {
             style: GoogleFonts.montserrat(
               fontSize: 22,
               fontWeight: FontWeight.w500,
-              color: Colors.white,
+              color: theme.colorScheme.onBackground,
               height: 1.4,
             ),
           ),
@@ -144,7 +146,7 @@ class HomeContentSubtitleAndButton extends StatelessWidget {
             style: GoogleFonts.montserrat(
               fontSize: 14,
               fontWeight: FontWeight.w500,
-              color: Colors.white60,
+              color: theme.colorScheme.onBackground.withOpacity(0.6),
               letterSpacing: 1.1,
             ),
           ),

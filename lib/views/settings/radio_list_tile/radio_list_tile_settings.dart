@@ -20,6 +20,7 @@ class _RadioListTileSettingState<T> extends State<RadioListTileSetting<T>> {
   @override
   Widget build(BuildContext context) {
     final appSetting = Provider.of<AppSettings>(context);
+    final theme = Theme.of(context);
     final currentSettingValue = appSetting.getCurrentSetting<T>();
     final values = widget.data?.values;
     if (values == null || values.isEmpty) {
@@ -30,7 +31,7 @@ class _RadioListTileSettingState<T> extends State<RadioListTileSetting<T>> {
         Expanded(
           child: Theme(
             data: Theme.of(context).copyWith(
-              unselectedWidgetColor: Colors.white,
+              unselectedWidgetColor: theme.colorScheme.onBackground,
             ),
             child: ListView.builder(
               padding: EdgeInsets.zero,
@@ -42,13 +43,13 @@ class _RadioListTileSettingState<T> extends State<RadioListTileSetting<T>> {
                   contentPadding: EdgeInsets.only(
                     right: Insets.lg,
                   ),
-                  activeColor: Colors.white,
+                  activeColor: theme.colorScheme.onBackground,
                   title: Text(
                     EnumUtils.getCapitalizedEnumName(value.toString()) ?? "-",
                     style: GoogleFonts.montserrat(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
-                      color: Colors.white,
+                      color: theme.colorScheme.onBackground,
                     ),
                   ),
                   value: value,

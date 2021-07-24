@@ -4,9 +4,7 @@ import 'package:androiker/resources/resources.dart';
 import 'package:androiker/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:sized_context/sized_context.dart';
+import 'package:androiker/core_packages.dart';
 
 const _kLeadingMaxHeight = 48.0;
 const _kSignatureIconSize = 48.0;
@@ -20,6 +18,7 @@ class HomeNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool useVerticalLayout = LayoutUtils.useVerticalLayout(context.widthPx);
+    final theme = Theme.of(context);
     return Container(
       padding: EdgeInsets.only(
         top: Insets.lg,
@@ -44,7 +43,7 @@ class HomeNavBar extends StatelessWidget {
                 Svgs.androidker,
                 width: _kSignatureIconSize,
                 height: _kSignatureIconSize,
-                color: Colors.white,
+                color: theme.colorScheme.onPrimary,
                 fit: BoxFit.cover,
               ),
             ),
@@ -56,7 +55,7 @@ class HomeNavBar extends StatelessWidget {
                 "|",
                 style: GoogleFonts.montserrat(
                   fontSize: 20,
-                  color: Colors.white,
+                  color: theme.colorScheme.onPrimary,
                 ),
               ),
             ),
@@ -67,7 +66,7 @@ class HomeNavBar extends StatelessWidget {
                 style: GoogleFonts.montserrat(
                   fontSize: 11,
                   fontWeight: FontWeight.w500,
-                  color: Colors.white,
+                  color: theme.colorScheme.onPrimary,
                 ),
               ),
             ),
@@ -78,14 +77,14 @@ class HomeNavBar extends StatelessWidget {
             IconButton(
               icon: const FaIcon(FontAwesomeIcons.facebook),
               iconSize: IconSizes.med,
-              color: Colors.white,
+              color: theme.colorScheme.onPrimary,
               onPressed: () => NavigationUtils.openUrl(
                   "https://www.facebook.com/phuc.huynh.280896/"),
             ),
             IconButton(
               icon: const FaIcon(FontAwesomeIcons.linkedin),
               iconSize: IconSizes.med,
-              color: Colors.white,
+              color: theme.colorScheme.onPrimary,
               onPressed: () {
                 NavigationUtils.openUrl(
                     "https://www.linkedin.com/in/phuchuynhstrong/");
@@ -93,7 +92,7 @@ class HomeNavBar extends StatelessWidget {
             ),
             IconButton(
               icon: const FaIcon(FontAwesomeIcons.github),
-              color: Colors.white,
+              color: theme.colorScheme.onPrimary,
               iconSize: IconSizes.med,
               onPressed: () {
                 NavigationUtils.openUrl("https://github.com/phuchuynhStrong");
@@ -101,7 +100,7 @@ class HomeNavBar extends StatelessWidget {
             ),
             IconButton(
               icon: const FaIcon(FontAwesomeIcons.cog),
-              color: Colors.white,
+              color: theme.colorScheme.onPrimary,
               iconSize: IconSizes.med,
               onPressed: () {
                 Scaffold.of(context).openDrawer();
@@ -112,10 +111,10 @@ class HomeNavBar extends StatelessWidget {
               onPressed: () {
                 Scaffold.of(context).openDrawer();
               },
-              icon: const Icon(
+              icon: Icon(
                 Icons.menu,
                 size: IconSizes.med,
-                color: Colors.white,
+                color: theme.colorScheme.onPrimary,
               ),
             ),
         ],

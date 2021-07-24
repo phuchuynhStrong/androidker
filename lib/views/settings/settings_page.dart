@@ -29,15 +29,16 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return AndroidkerScaffold(
       customAppBarLeading: !kIsWeb
           ? IconButton(
               onPressed: () {
                 Navigator.pop(context);
               },
-              icon: const FaIcon(
+              icon: FaIcon(
                 FontAwesomeIcons.caretLeft,
-                color: Colors.white,
+                color: theme.colorScheme.onPrimary,
               ),
             )
           : null,
@@ -64,7 +65,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           style: GoogleFonts.montserrat(
                             fontSize: 24,
                             fontWeight: FontWeight.w500,
-                            color: Colors.white,
+                            color: theme.colorScheme.onBackground,
                             letterSpacing: 1.0,
                           ),
                         ),
@@ -77,7 +78,8 @@ class _SettingsPageState extends State<SettingsPage> {
                           "Customize your settings on Androidker's Folio",
                           style: GoogleFonts.montserrat(
                             fontSize: 15,
-                            color: Colors.white70,
+                            color:
+                                theme.colorScheme.onBackground.withOpacity(0.7),
                           ),
                         ),
                       ),
