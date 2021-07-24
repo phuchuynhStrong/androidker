@@ -12,6 +12,7 @@ class SubSetting extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return SizedBox(
       width: context.widthPx,
       child: Padding(
@@ -28,9 +29,9 @@ class SubSetting extends StatelessWidget {
                 onPressed: () {
                   onBackPressed?.call();
                 },
-                icon: const FaIcon(
+                icon: FaIcon(
                   FontAwesomeIcons.arrowLeft,
-                  color: Colors.white,
+                  color: theme.colorScheme.onBackground,
                   size: 16,
                 ),
               ),
@@ -45,7 +46,7 @@ class SubSetting extends StatelessWidget {
                       style: GoogleFonts.montserrat(
                         fontSize: 24,
                         fontWeight: FontWeight.w500,
-                        color: Colors.white,
+                        color: theme.colorScheme.onBackground,
                         letterSpacing: 1.0,
                       ),
                     ),

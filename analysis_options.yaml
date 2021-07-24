@@ -30,6 +30,7 @@ analyzer:
     - build/**
     - "**/*.g.dart"
     - "**/*.freezed.dart"
+    - "**/generated_plugin_registrant.dart"
   errors:
     todo: ignore
 

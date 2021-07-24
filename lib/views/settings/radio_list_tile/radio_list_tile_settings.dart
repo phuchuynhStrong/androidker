@@ -1,4 +1,5 @@
 import 'package:androiker/_utils/enum.dart';
+import 'package:androiker/di/module/app_settings.dart';
 import 'package:androiker/views/settings/settings_item_data.dart';
 import 'package:flutter/material.dart';
 
@@ -14,10 +15,13 @@ class RadioListTileSetting<T> extends StatefulWidget {
 }
 
 class _RadioListTileSettingState<T> extends State<RadioListTileSetting<T>> {
-  T? _current;
+  T? current;
 
   @override
   Widget build(BuildContext context) {
+    final appSetting = Provider.of<AppSettings>(context);
+    final theme = Theme.of(context);
+    final currentSettingValue = appSetting.getCurrentSetting<T>();
     final values = widget.data?.values;
     if (values == null || values.isEmpty) {
       return const SizedBox();
@@ -27,7 +31,7 @@ class _RadioListTileSettingState<T> extends State<RadioListTileSetting<T>> {
         Expanded(
           child: Theme(
             data: Theme.of(context).copyWith(
-              unselectedWidgetColor: Colors.white,
+              unselectedWidgetColor: theme.colorScheme.onBackground,
             ),
             child: ListView.builder(
               padding: EdgeInsets.zero,
@@ -39,22 +43,22 @@ class _RadioListTileSettingState<T> extends State<RadioListTileSetting<T>> {
                   contentPadding: EdgeInsets.only(
                     right: Insets.lg,
                   ),
-                  selected: _current == value,
-                  activeColor: Colors.white,
+                  activeColor: theme.colorScheme.onBackground,
                   title: Text(
                     EnumUtils.getCapitalizedEnumName(value.toString()) ?? "-",
                     style: GoogleFonts.montserrat(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
-                      color: Colors.white,
+                      color: theme.colorScheme.onBackground,
                     ),
                   ),
                   value: value,
-                  groupValue: _current,
+                  groupValue: current ?? currentSettingValue,
                   onChanged: (val) {
                     setState(() {
-                      _current = val;
+                      current = val;
                     });
+                    appSetting.handleSettingChanged(val);
                   },
                 );
               },
