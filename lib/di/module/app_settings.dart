@@ -10,6 +10,7 @@ const _kSettingTextSizeKey = "text_size";
 
 class AppSettings extends ChangeNotifier {
   static AppTheme get _defaultTheme => AppTheme.fromType(ThemeType.menInBlack);
+  static double get _defaultTextScaleFactor => 1.0;
   late final SharedPreferences? _preferences;
 
   AppSettings({
@@ -43,6 +44,13 @@ class AppSettings extends ChangeNotifier {
   AppTheme get theme => _theme;
   set theme(AppTheme theme) {
     _theme = theme;
+    notifyListeners();
+  }
+
+  double _textScaleFactor = _defaultTextScaleFactor;
+  double get textScaleFactor => _textScaleFactor;
+  set textScaleFactor(double factor) {
+    _textScaleFactor = factor;
     notifyListeners();
   }
 
@@ -109,6 +117,17 @@ class AppSettings extends ChangeNotifier {
 
   void handleTextSizeChanged(TextSizeSettingEnum changedSetting) {
     textSizeSetting = changedSetting;
+    switch (changedSetting) {
+      case TextSizeSettingEnum.large:
+        textScaleFactor = 1.25;
+        break;
+      case TextSizeSettingEnum.small:
+        textScaleFactor = 0.75;
+        break;
+      default:
+        textScaleFactor = 1.0;
+        break;
+    }
     _preferences?.setString(
         _kSettingTextSizeKey, EnumToString.convertToString(changedSetting));
   }
