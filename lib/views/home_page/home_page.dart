@@ -3,7 +3,6 @@ import 'package:androiker/routing/app_link.dart';
 import 'package:androiker/routing/app_pages.dart';
 import 'package:androiker/routing/bloc/routing_bloc.dart';
 import 'package:androiker/views/cv/cv_viewer.dart';
-import 'package:androiker/views/home_page/home_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -23,32 +22,14 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Title(
-        color: Colors.blue,
-        title: "Androidker Folio",
-        child: BackgroundContainer(
-          child: Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: Insets.xl,
-            ),
-            child: Column(
-              children: const <Widget>[
-                HomeNavBar(
-                  email: "phuchuynh.strong@gmail.com",
-                ),
-                HomeContentWidget(),
-              ],
-            ),
-          ),
-        ),
-      ),
+    return const AndroidkerScaffold(
+      body: HomeContentWidget(),
     );
   }
 }
 
 final kHomeContentPadding = EdgeInsets.only(
-  top: Insets.scale * 96,
+  top: Insets.scale * 96 * 2,
   bottom: Insets.scale * 48,
 );
 final kHomeContentMarginTop = EdgeInsets.only(
@@ -60,6 +41,7 @@ class HomeContentTitleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -69,7 +51,7 @@ class HomeContentTitleWidget extends StatelessWidget {
             style: GoogleFonts.montserrat(
               fontSize: 40,
               fontWeight: FontWeight.bold,
-              color: Colors.white,
+              color: theme.colorScheme.onBackground,
             ),
             children: [
               const TextSpan(
@@ -91,7 +73,7 @@ class HomeContentTitleWidget extends StatelessWidget {
             style: GoogleFonts.montserrat(
               fontSize: 40,
               fontWeight: FontWeight.bold,
-              color: Colors.white,
+              color: theme.colorScheme.onBackground,
             ),
             children: [
               TextSpan(
@@ -99,7 +81,7 @@ class HomeContentTitleWidget extends StatelessWidget {
                 style: GoogleFonts.montserrat(
                   fontSize: 19,
                   fontWeight: FontWeight.w500,
-                  color: Colors.white,
+                  color: theme.colorScheme.onBackground,
                 ),
               )
             ],
@@ -124,6 +106,7 @@ class HomeContentSubtitleAndButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -149,7 +132,7 @@ class HomeContentSubtitleAndButton extends StatelessWidget {
             style: GoogleFonts.montserrat(
               fontSize: 22,
               fontWeight: FontWeight.w500,
-              color: Colors.white,
+              color: theme.colorScheme.onBackground,
               height: 1.4,
             ),
           ),
@@ -163,7 +146,7 @@ class HomeContentSubtitleAndButton extends StatelessWidget {
             style: GoogleFonts.montserrat(
               fontSize: 14,
               fontWeight: FontWeight.w500,
-              color: Colors.white60,
+              color: theme.colorScheme.onBackground.withOpacity(0.6),
               letterSpacing: 1.1,
             ),
           ),
@@ -257,35 +240,35 @@ class HomePrimaryButtons extends StatelessWidget {
         Container(
           height: 16.0,
         ),
-        ElevatedButton(
-          onPressed: () {},
-          style: ButtonStyle(
-            backgroundColor: kHomePrimaryButtonColor,
-            padding: kHomePrimaryButtonpadding,
-            shape: kHomePrimaryButtonShape,
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                margin: kHomePrimaryButtonTextMargin,
-                child: Text(
-                  "Showcase",
-                  style: GoogleFonts.montserrat(
-                    color: Colors.white,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-              const FaIcon(
-                FontAwesomeIcons.planeArrival,
-                size: 15,
-                color: Colors.white,
-              ),
-            ],
-          ),
-        ),
+        // ElevatedButton(
+        //   onPressed: () {},
+        //   style: ButtonStyle(
+        //     backgroundColor: kHomePrimaryButtonColor,
+        //     padding: kHomePrimaryButtonpadding,
+        //     shape: kHomePrimaryButtonShape,
+        //   ),
+        //   child: Row(
+        //     mainAxisSize: MainAxisSize.min,
+        //     children: [
+        //       Container(
+        //         margin: kHomePrimaryButtonTextMargin,
+        //         child: Text(
+        //           "Showcase",
+        //           style: GoogleFonts.montserrat(
+        //             color: Colors.white,
+        //             fontSize: 15,
+        //             fontWeight: FontWeight.w500,
+        //           ),
+        //         ),
+        //       ),
+        //       const FaIcon(
+        //         FontAwesomeIcons.planeArrival,
+        //         size: 15,
+        //         color: Colors.white,
+        //       ),
+        //     ],
+        //   ),
+        // ),
       ],
     );
   }
@@ -298,7 +281,6 @@ class HomeContentWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-        margin: kHomeContentMarginTop,
         child: SingleChildScrollView(
           padding: kHomeContentPadding,
           child: Wrap(

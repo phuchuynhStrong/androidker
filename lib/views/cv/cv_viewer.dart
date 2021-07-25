@@ -21,7 +21,6 @@ class _AppCvViewerState extends State<AppCvViewer> {
     super.initState();
     pdfController = PdfController(
       document: PdfDocument.openAsset('assets/raw/phuc-cv-2021.pdf'),
-      viewportFraction: 0.5,
     );
   }
 

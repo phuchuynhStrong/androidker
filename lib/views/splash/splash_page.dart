@@ -34,6 +34,7 @@ class _SplashPageState extends State<SplashPage> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     precacheImage(const AssetImage(Images.background), context);
+    precacheImage(const AssetImage(Images.coolerImage), context);
   }
 
   @override
