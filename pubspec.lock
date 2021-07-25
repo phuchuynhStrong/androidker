@@ -394,7 +394,7 @@ packages:
   flutter_quill:
     dependency: "direct main"
     description:
-      path: "../flutter-quill"
+      path: "packages/flutter_quill"
       relative: true
     source: path
     version: "1.7.0"
