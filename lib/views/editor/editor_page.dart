@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:androiker/core_packages.dart';
+import 'package:androiker/di/component/article_component.dart';
+import 'package:articles/model/article.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 
@@ -99,7 +103,20 @@ class _EditorPageState extends State<EditorPage> {
                       )
                     ],
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    context
+                        .read<ArticleComponent>()
+                        .module
+                        ?.repository
+                        ?.saveArticle(
+                          Article(
+                            title: "Test",
+                            author: "Androidker",
+                            content: jsonEncode(
+                                _controller.document.toDelta().toJson()),
+                          ),
+                        );
+                  },
                 ),
               ),
             ],
