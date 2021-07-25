@@ -14,15 +14,17 @@ class BlogItem extends StatelessWidget {
       return const SizedBox();
     }
 
-    return TextButton(
-      onPressed: () {
+    return InkWell(
+      onTap: () {
         onPressed?.call();
       },
       child: Container(
         margin: EdgeInsets.only(
           bottom: Insets.lg,
         ),
-        padding: EdgeInsets.all(Insets.lg),
+        padding: EdgeInsets.symmetric(
+          vertical: Insets.lg,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

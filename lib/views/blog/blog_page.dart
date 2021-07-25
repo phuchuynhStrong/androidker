@@ -14,6 +14,7 @@ class BlogPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return BlocProvider<BlogPageBloc>(
       create: (context) => BlogPageBloc(
         articleRepository: context.read<ArticleComponent>().module?.repository,
@@ -36,6 +37,19 @@ class BlogPage extends StatelessWidget {
                   builder: (context, state) {
                     if (state.isFetching) {
                       return Container();
+                    }
+
+                    if (state.fetched && state.data.isEmpty) {
+                      return Center(
+                        child: Text(
+                          "No Posts Yet.",
+                          style: GoogleFonts.montserrat(
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold,
+                            color: theme.colorScheme.onBackground,
+                          ),
+                        ),
+                      );
                     }
 
                     return ListView.builder(

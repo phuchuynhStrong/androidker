@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
 }
 
 final kHomeContentPadding = EdgeInsets.only(
-  top: Insets.scale * 96,
+  top: Insets.scale * 96 * 2,
   bottom: Insets.scale * 48,
 );
 final kHomeContentMarginTop = EdgeInsets.only(
@@ -240,35 +240,35 @@ class HomePrimaryButtons extends StatelessWidget {
         Container(
           height: 16.0,
         ),
-        ElevatedButton(
-          onPressed: () {},
-          style: ButtonStyle(
-            backgroundColor: kHomePrimaryButtonColor,
-            padding: kHomePrimaryButtonpadding,
-            shape: kHomePrimaryButtonShape,
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                margin: kHomePrimaryButtonTextMargin,
-                child: Text(
-                  "Showcase",
-                  style: GoogleFonts.montserrat(
-                    color: Colors.white,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-              const FaIcon(
-                FontAwesomeIcons.planeArrival,
-                size: 15,
-                color: Colors.white,
-              ),
-            ],
-          ),
-        ),
+        // ElevatedButton(
+        //   onPressed: () {},
+        //   style: ButtonStyle(
+        //     backgroundColor: kHomePrimaryButtonColor,
+        //     padding: kHomePrimaryButtonpadding,
+        //     shape: kHomePrimaryButtonShape,
+        //   ),
+        //   child: Row(
+        //     mainAxisSize: MainAxisSize.min,
+        //     children: [
+        //       Container(
+        //         margin: kHomePrimaryButtonTextMargin,
+        //         child: Text(
+        //           "Showcase",
+        //           style: GoogleFonts.montserrat(
+        //             color: Colors.white,
+        //             fontSize: 15,
+        //             fontWeight: FontWeight.w500,
+        //           ),
+        //         ),
+        //       ),
+        //       const FaIcon(
+        //         FontAwesomeIcons.planeArrival,
+        //         size: 15,
+        //         color: Colors.white,
+        //       ),
+        //     ],
+        //   ),
+        // ),
       ],
     );
   }
@@ -281,7 +281,6 @@ class HomeContentWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-        margin: kHomeContentMarginTop,
         child: SingleChildScrollView(
           padding: kHomeContentPadding,
           child: Wrap(
