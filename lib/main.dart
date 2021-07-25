@@ -1,7 +1,9 @@
 import 'package:androiker/_utils/logger.dart';
 import 'package:androiker/di/component/app_component.dart';
+import 'package:androiker/di/component/article_component.dart';
 import 'package:androiker/di/module/app_module.dart';
 import 'package:androiker/di/module/app_settings.dart';
+import 'package:androiker/di/module/article_module.dart';
 import 'package:androiker/routing/app_route_parser.dart';
 import 'package:androiker/routing/app_router.dart';
 import 'package:androiker/routing/bloc/routing_bloc.dart';
@@ -11,6 +13,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_strategy/url_strategy.dart';
@@ -30,7 +33,7 @@ void main() async {
       await Future<void>.delayed(Duration.zero);
     }
 
-    FirebaseFactory.create();
+    final FirebaseService firebaseService = FirebaseFactory.create();
 
     // Reemove leading hash (#) from web URl
     setPathUrlStrategy();
@@ -43,6 +46,13 @@ void main() async {
       ),
     );
 
+    final articleComponent = ArticleComponent(
+      module: ArticleModule(
+        firestore: firebaseService.firestore,
+        logger: Logger(),
+      ),
+    );
+
     final appSettings = AppSettings(
       sharedPreferences: sharedPrefs,
     );
@@ -51,6 +61,7 @@ void main() async {
       MultiProvider(
         providers: [
           Provider<AppComponent>(create: (_) => appComponent),
+          Provider<ArticleComponent>(create: (_) => articleComponent),
           ChangeNotifierProvider<AppSettings>(create: (_) => appSettings),
         ],
         child: _AndroidkerApp(
