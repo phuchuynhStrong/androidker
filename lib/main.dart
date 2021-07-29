@@ -1,14 +1,17 @@
 import 'package:androiker/_utils/logger.dart';
 import 'package:androiker/di/component/app_component.dart';
 import 'package:androiker/di/component/article_component.dart';
+import 'package:androiker/di/component/auth_component.dart';
 import 'package:androiker/di/module/app_module.dart';
 import 'package:androiker/di/module/app_settings.dart';
 import 'package:androiker/di/module/article_module.dart';
+import 'package:androiker/di/module/auth_module.dart';
 import 'package:androiker/routing/app_route_parser.dart';
 import 'package:androiker/routing/app_router.dart';
 import 'package:androiker/routing/bloc/routing_bloc.dart';
 import 'package:androiker/services/firebase/firebase_service.dart';
 import 'package:androiker/themes.dart';
+import 'package:authentication/model/signin_request.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -53,6 +56,13 @@ void main() async {
       ),
     );
 
+    final authComponent = AuthComponent(
+      authModule: AuthModule(
+        firebaseAuth: firebaseService.firebaseAuth,
+        logger: Logger(),
+      ),
+    );
+
     final appSettings = AppSettings(
       sharedPreferences: sharedPrefs,
     );
@@ -62,6 +72,7 @@ void main() async {
         providers: [
           Provider<AppComponent>(create: (_) => appComponent),
           Provider<ArticleComponent>(create: (_) => articleComponent),
+          Provider<AuthComponent>(create: (_) => authComponent),
           ChangeNotifierProvider<AppSettings>(create: (_) => appSettings),
         ],
         child: _AndroidkerApp(
