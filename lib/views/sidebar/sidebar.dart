@@ -1,6 +1,7 @@
 import 'package:androiker/_utils/layout.dart';
 import 'package:androiker/_utils/navigation.dart';
 import 'package:androiker/resources/resources.dart';
+import 'package:androiker/routing/bloc/routing_bloc.dart';
 import 'package:androiker/styles.dart';
 import 'package:androiker/views/sidebar/sidebar_settings_item.dart';
 import 'package:flutter/material.dart';
@@ -10,9 +11,25 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 const _kSidebarPercentWeb = 0.35;
 const _kSidebarPecentMobile = 0.8;
 const _kSidebarDarkBackgroundColor = Color(0xff1a1818);
+const _kSidebarSpecialCountMax = 7;
 
-class AndroidkerSidebar extends StatelessWidget {
+class AndroidkerSidebar extends StatefulWidget {
   const AndroidkerSidebar({Key? key}) : super(key: key);
+
+  @override
+  _AndroidkerSidebarState createState() => _AndroidkerSidebarState();
+}
+
+class _AndroidkerSidebarState extends State<AndroidkerSidebar> {
+  int _specialCounter = 0;
+
+  void onAvatarPressed() {
+    _specialCounter++;
+    if (_specialCounter == _kSidebarSpecialCountMax) {
+      context.read<RoutingBloc>().openSecretGate();
+      _specialCounter = 0;
+    }
+  }
 
   void _closeSidebar(BuildContext context) {
     if (Scaffold.of(context).isDrawerOpen) {
@@ -37,14 +54,17 @@ class AndroidkerSidebar extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              margin: EdgeInsets.only(
-                top: Insets.lg,
-                bottom: Insets.lg,
-              ),
-              child: const CircleAvatar(
-                backgroundImage: AssetImage(Images.coolerImage),
-                radius: 24.0,
+            InkWell(
+              onTap: onAvatarPressed,
+              child: Container(
+                margin: EdgeInsets.only(
+                  top: Insets.lg,
+                  bottom: Insets.lg,
+                ),
+                child: const CircleAvatar(
+                  backgroundImage: AssetImage(Images.coolerImage),
+                  radius: 24.0,
+                ),
               ),
             ),
             Container(

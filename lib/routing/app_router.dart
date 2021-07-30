@@ -10,6 +10,7 @@ import 'package:androiker/views/editor/editor_page.dart';
 import 'package:androiker/views/home_page/home_page.dart';
 import 'package:androiker/views/not_found/page_not_found.dart';
 import 'package:androiker/views/settings/settings_page.dart';
+import 'package:androiker/views/signin/signin_page.dart';
 import 'package:androiker/views/splash/splash_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -41,6 +42,7 @@ class AppRouterDelegate extends RouterDelegate<AppLink> with ChangeNotifier {
     final showSplash = pageEnum == AppPage.splash;
     final showSettings = pageEnum == AppPage.settings;
     final showEditor = pageEnum == AppPage.editor;
+    final showSignIn = pageEnum == AppPage.signIn;
     return Navigator(
       onPopPage: _handleNavigatorPop,
       pages: [
@@ -55,6 +57,9 @@ class AppRouterDelegate extends RouterDelegate<AppLink> with ChangeNotifier {
         ],
         if (showEditor) ...[
           const EditorPage(),
+        ],
+        if (showSignIn) ...[
+          const SignInScreen(),
         ],
         if (showSettings) ...[
           const SettingsPage(),
