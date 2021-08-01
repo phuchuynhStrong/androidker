@@ -8,6 +8,7 @@ class SignInPageState with _$SignInPageState {
   factory SignInPageState({
     @Default(false) final bool isExecuting,
     @Default(false) final bool executed,
+    @Default(false) final bool loggedIn,
     final String? errorMsg,
   }) = _SignInPageState;
   factory SignInPageState.fromJson(Map<String, dynamic> json) =>

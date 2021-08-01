@@ -12,28 +12,39 @@ import 'package:androiker/views/not_found/page_not_found.dart';
 import 'package:androiker/views/settings/settings_page.dart';
 import 'package:androiker/views/signin/signin_page.dart';
 import 'package:androiker/views/splash/splash_page.dart';
+import 'package:authentication/di/user_provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
+import 'package:provider/provider.dart';
 
 class AppRouterDelegate extends RouterDelegate<AppLink> with ChangeNotifier {
   final RoutingBloc routingBloc;
+  final UserProvider? userProvider;
   late final StreamSubscription<RoutingState> _routingChangeSub;
 
-  AppRouterDelegate(this.routingBloc) {
+  AppRouterDelegate(
+    this.routingBloc, {
+    this.userProvider,
+  }) {
     _routingChangeSub = routingBloc.stream.listen((event) {
       notifyListeners();
     });
+    userProvider?.addListener(onUserChanged);
   }
+
+  void onUserChanged() {}
 
   @override
   void dispose() {
     _routingChangeSub.cancel();
+    userProvider?.removeListener(onUserChanged);
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final user = context.watch<UserProvider>().getUser();
     final pageEnum = currentConfiguration?.getAppPageEnum();
     final pageId = currentConfiguration?.pageId;
     final pageNotFound = isPageNotFound(pageId);

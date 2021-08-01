@@ -11,6 +11,7 @@ import 'package:androiker/routing/app_router.dart';
 import 'package:androiker/routing/bloc/routing_bloc.dart';
 import 'package:androiker/services/firebase/firebase_service.dart';
 import 'package:androiker/themes.dart';
+import 'package:authentication/di/user_provider.dart';
 import 'package:authentication/model/signin_request.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -67,6 +68,8 @@ void main() async {
       sharedPreferences: sharedPrefs,
     );
 
+    final UserProvider userProvider = UserProvider();
+
     runApp(
       MultiProvider(
         providers: [
@@ -74,10 +77,12 @@ void main() async {
           Provider<ArticleComponent>(create: (_) => articleComponent),
           Provider<AuthComponent>(create: (_) => authComponent),
           ChangeNotifierProvider<AppSettings>(create: (_) => appSettings),
+          ChangeNotifierProvider<UserProvider>(create: (_) => userProvider),
         ],
         child: _AndroidkerApp(
           appComponent: appComponent,
           appSettings: appSettings,
+          userProvider: userProvider,
         ),
       ),
     );
@@ -87,10 +92,12 @@ void main() async {
 class _AndroidkerApp extends StatefulWidget {
   final AppComponent? appComponent;
   final AppSettings? appSettings;
+  final UserProvider? userProvider;
   const _AndroidkerApp({
     Key? key,
     this.appComponent,
     this.appSettings,
+    this.userProvider,
   }) : super(key: key);
 
   @override
@@ -107,7 +114,7 @@ class _AndroidkerAppState extends State<_AndroidkerApp> {
     routingBloc = RoutingBloc(
       sharedPreferences: widget.appComponent?.appModule?.sharedPreferences,
     );
-    router = AppRouterDelegate(routingBloc);
+    router = AppRouterDelegate(routingBloc, userProvider: widget.userProvider);
     updateSystemBrightness(WidgetsBinding.instance!.window.platformBrightness);
     WidgetsBinding.instance!.window.onPlatformBrightnessChanged = () {
       updateSystemBrightness(
