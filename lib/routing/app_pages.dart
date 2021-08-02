@@ -6,6 +6,7 @@ enum AppPage {
   splash,
   settings,
   editor,
+  signIn,
 }
 
 extension AppPageName on AppPage {
@@ -18,6 +19,7 @@ extension AppPageName on AppPage {
       case AppPage.showcase:
       case AppPage.settings:
       case AppPage.editor:
+      case AppPage.signIn:
         return toString().split('.').last;
       default:
         return '404';

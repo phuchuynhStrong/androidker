@@ -1,5 +1,5 @@
-name: articles
-description: Package contains Articles logic
+name: authentication
+description: Package contains Authentication logic
 
 version: 1.0.0+1
 
@@ -11,9 +11,10 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.3
-  cloud_firestore: ^2.4.0
   logger: ^1.0.0
+  firebase_auth: ^3.0.1
   freezed_annotation: ^0.14.2
+  provider: 5.0.0
 
 dev_dependencies:
   flutter_test:

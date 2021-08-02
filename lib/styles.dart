@@ -17,6 +17,11 @@ class IconSizes {
   static const double med = 24;
 }
 
+class LoadingSizes {
+  static const double scale = 1;
+  static const double med = 48.0;
+}
+
 class Insets {
   static double scale = 1;
   static double offsetScale = 1;

@@ -25,6 +25,12 @@ class RoutingBloc extends Bloc<RoutingEvent, RoutingState> {
 
   void navigate(AppLink appLink) => add(RoutingEvent(appLink));
 
+  void openSecretGate() => navigate(
+        AppLink(
+          pageId: AppPage.signIn.name,
+        ),
+      );
+
   AppPage getCurrentPageEnum() {
     final appLink = AppLink.fromLocation(state.location);
     return appLink.getAppPageEnum();
