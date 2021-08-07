@@ -12,7 +12,6 @@ import 'package:androiker/routing/bloc/routing_bloc.dart';
 import 'package:androiker/services/firebase/firebase_service.dart';
 import 'package:androiker/themes.dart';
 import 'package:authentication/di/user_provider.dart';
-import 'package:authentication/model/signin_request.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -68,7 +67,9 @@ void main() async {
       sharedPreferences: sharedPrefs,
     );
 
-    final UserProvider userProvider = UserProvider();
+    final UserProvider userProvider = UserProvider(
+      sharedPreferences: sharedPrefs,
+    );
 
     runApp(
       MultiProvider(
