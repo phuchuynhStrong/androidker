@@ -68,7 +68,9 @@ void main() async {
       sharedPreferences: sharedPrefs,
     );
 
-    final UserProvider userProvider = UserProvider();
+    final UserProvider userProvider = UserProvider(
+      sharedPreferences: sharedPrefs,
+    );
 
     runApp(
       MultiProvider(
