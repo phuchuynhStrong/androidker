@@ -16,7 +16,6 @@ import 'package:authentication/di/user_provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
-import 'package:provider/provider.dart';
 
 class AppRouterDelegate extends RouterDelegate<AppLink> with ChangeNotifier {
   final RoutingBloc routingBloc;
@@ -44,7 +43,6 @@ class AppRouterDelegate extends RouterDelegate<AppLink> with ChangeNotifier {
 
   @override
   Widget build(BuildContext context) {
-    final user = context.watch<UserProvider>().getUser();
     final pageEnum = currentConfiguration?.getAppPageEnum();
     final pageId = currentConfiguration?.pageId;
     final pageNotFound = isPageNotFound(pageId);

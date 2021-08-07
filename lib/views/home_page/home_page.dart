@@ -280,21 +280,19 @@ class HomeContentWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Container(
-        child: SingleChildScrollView(
-          padding: kHomeContentPadding,
-          child: Wrap(
-            spacing: Insets.scale * 48,
-            runSpacing: Insets.xl,
-            crossAxisAlignment: WrapCrossAlignment.start,
-            children: [
-              const HomeContentTitleWidget(),
-              const HomeContentSubtitleAndButton(),
-              // Always have a new line of widget
-              Container(width: double.infinity),
-              const HomePrimaryButtons(),
-            ],
-          ),
+      child: SingleChildScrollView(
+        padding: kHomeContentPadding,
+        child: Wrap(
+          spacing: Insets.scale * 48,
+          runSpacing: Insets.xl,
+          crossAxisAlignment: WrapCrossAlignment.start,
+          children: [
+            const HomeContentTitleWidget(),
+            const HomeContentSubtitleAndButton(),
+            // Always have a new line of widget
+            Container(width: double.infinity),
+            const HomePrimaryButtons(),
+          ],
         ),
       ),
     );
