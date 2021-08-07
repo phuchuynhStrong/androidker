@@ -2,6 +2,7 @@ import 'package:androiker/_utils/layout.dart';
 import 'package:androiker/_utils/navigation.dart';
 import 'package:androiker/resources/resources.dart';
 import 'package:androiker/styles.dart';
+import 'package:androiker/views/home_page/home_nav_bar_editor_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:androiker/core_packages.dart';
@@ -106,6 +107,7 @@ class HomeNavBar extends StatelessWidget {
                 Scaffold.of(context).openDrawer();
               },
             ),
+            const HomeNavBarEditorBtn(),
           ] else
             IconButton(
               onPressed: () {
