@@ -20,7 +20,7 @@ import 'cursor.dart';
 import 'default_styles.dart';
 import 'delegate.dart';
 import 'editor.dart';
-import 'keyboard_listener.dart';
+import 'keyboard_listener.dart' as kb;
 import 'proxy.dart';
 import 'raw_editor/raw_editor_state_keyboard_mixin.dart';
 import 'raw_editor/raw_editor_state_selection_delegate_mixin.dart';
@@ -105,7 +105,7 @@ class RawEditorState extends EditorState
   final GlobalKey _editorKey = GlobalKey();
 
   // Keyboard
-  late KeyboardListener _keyboardListener;
+  late kb.KeyboardListener _keyboardListener;
   KeyboardVisibilityController? _keyboardVisibilityController;
   StreamSubscription<bool>? _keyboardVisibilitySubscription;
   bool _keyboardVisible = false;
@@ -331,7 +331,7 @@ class RawEditorState extends EditorState
       tickerProvider: this,
     );
 
-    _keyboardListener = KeyboardListener(
+    _keyboardListener = kb.KeyboardListener(
       handleCursorMovement,
       handleShortcut,
       handleDelete,
