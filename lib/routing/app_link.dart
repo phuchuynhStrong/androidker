@@ -1,9 +1,10 @@
 import 'dart:convert';
 
 import 'package:androiker/routing/app_pages.dart';
+import 'package:equatable/equatable.dart';
 
 // Inspired from flutter-folio
-class AppLink {
+class AppLink extends Equatable {
   static const String kArticleParam = "article";
   static const String kPageParam = "page";
   // TODO: What does fuse do ?
@@ -40,25 +41,19 @@ class AppLink {
 
   static AppLink fromLocation(String? location) {
     location = Uri.decodeFull(location ?? "");
-    Map<String, String> params = Uri.parse(location).queryParameters;
-    // Handle paths
-    final paths = location.split('/')..removeWhere((path) => path.isEmpty);
-    // Shared function to inject keys if they are not null
-    void trySet(String key, void Function(String) setter) {
-      if (params.containsKey(key)) setter.call(params[key]!);
+    final urlSuffixes = location.replaceAll("//", "").split("/")..removeAt(0);
+    String? pageId = '';
+    String? articleId;
+    if (urlSuffixes.isNotEmpty) {
+      pageId = urlSuffixes.first;
+      if (urlSuffixes.length > 1) {
+        articleId = urlSuffixes[1];
+      }
     }
-
-    // Create the applink, inject any params we've found
-    AppLink link = AppLink();
-    trySet(AppLink.kArticleParam, (s) => link.articleId = s);
-    if (paths.isNotEmpty) {
-      link.pageId = paths.first;
-    }
-
-    if (paths.isEmpty) {
-      link.pageId = '';
-    }
-    return link;
+    return AppLink(
+      pageId: pageId,
+      articleId: articleId,
+    );
   }
 
   String toRawLocation() {
@@ -68,13 +63,14 @@ class AppLink {
       bool hideKey = false,
       bool appendAlt = true,
     }) =>
-        value == null
-            ? ""
-            : "${hideKey ? "" : '=$key'}$value${appendAlt ? '&' : ''}";
-    String loc = "/";
-    loc += addKeyValPair(key: kArticleParam, value: articleId);
+        value == null ? "" : "/$value";
+    String loc = "";
     loc += addKeyValPair(
-        key: kPageParam, value: pageId, hideKey: true, appendAlt: false);
+        key: kPageParam,
+        value: pageId,
+        hideKey: true,
+        appendAlt: articleId != null);
+    loc += addKeyValPair(key: kArticleParam, value: articleId);
 
     return Uri.encodeFull(loc);
   }
@@ -86,16 +82,16 @@ class AppLink {
       bool hideKey = false,
       bool appendAlt = true,
     }) =>
-        value == null
-            ? ""
-            : "${hideKey ? "" : '=$key'}$value${appendAlt ? '&' : ''}";
-    String loc = "/";
-    loc += addKeyValPair(key: kArticleParam, value: articleId);
-
+        (value == null || value.isEmpty) ? "" : "/$value";
+    String loc = "";
     if (!_shouldHidePath(pageId)) {
       loc += addKeyValPair(
-          key: kPageParam, value: pageId, hideKey: true, appendAlt: false);
+          key: kPageParam,
+          value: pageId,
+          hideKey: true,
+          appendAlt: articleId != null);
     }
+    loc += addKeyValPair(key: kArticleParam, value: articleId);
 
     return Uri.encodeFull(loc);
   }
@@ -105,4 +101,11 @@ class AppLink {
   static bool _shouldHidePath(String? pageId) {
     return pageId == AppPage.home.name;
   }
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [
+        pageId,
+        articleId,
+      ];
 }

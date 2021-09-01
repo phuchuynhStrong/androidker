@@ -12,6 +12,7 @@ class Article with _$Article {
     final String? thumbnail,
     final String? content,
     final String? author,
+    @Default(false) final bool isDraft,
   }) = _Article;
   factory Article.fromJson(Map<String, dynamic> json) =>
       _$ArticleFromJson(json);
