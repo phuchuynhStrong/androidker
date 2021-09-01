@@ -26,7 +26,8 @@ class _$ArticleTearOff {
       String? cover,
       String? thumbnail,
       String? content,
-      String? author}) {
+      String? author,
+      bool isDraft = false}) {
     return _Article(
       id: id,
       title: title,
@@ -34,6 +35,7 @@ class _$ArticleTearOff {
       thumbnail: thumbnail,
       content: content,
       author: author,
+      isDraft: isDraft,
     );
   }
 
@@ -53,6 +55,7 @@ mixin _$Article {
   String? get thumbnail => throw _privateConstructorUsedError;
   String? get content => throw _privateConstructorUsedError;
   String? get author => throw _privateConstructorUsedError;
+  bool get isDraft => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -69,7 +72,8 @@ abstract class $ArticleCopyWith<$Res> {
       String? cover,
       String? thumbnail,
       String? content,
-      String? author});
+      String? author,
+      bool isDraft});
 }
 
 /// @nodoc
@@ -88,6 +92,7 @@ class _$ArticleCopyWithImpl<$Res> implements $ArticleCopyWith<$Res> {
     Object? thumbnail = freezed,
     Object? content = freezed,
     Object? author = freezed,
+    Object? isDraft = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -114,6 +119,10 @@ class _$ArticleCopyWithImpl<$Res> implements $ArticleCopyWith<$Res> {
           ? _value.author
           : author // ignore: cast_nullable_to_non_nullable
               as String?,
+      isDraft: isDraft == freezed
+          ? _value.isDraft
+          : isDraft // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -129,7 +138,8 @@ abstract class _$ArticleCopyWith<$Res> implements $ArticleCopyWith<$Res> {
       String? cover,
       String? thumbnail,
       String? content,
-      String? author});
+      String? author,
+      bool isDraft});
 }
 
 /// @nodoc
@@ -149,6 +159,7 @@ class __$ArticleCopyWithImpl<$Res> extends _$ArticleCopyWithImpl<$Res>
     Object? thumbnail = freezed,
     Object? content = freezed,
     Object? author = freezed,
+    Object? isDraft = freezed,
   }) {
     return _then(_Article(
       id: id == freezed
@@ -175,6 +186,10 @@ class __$ArticleCopyWithImpl<$Res> extends _$ArticleCopyWithImpl<$Res>
           ? _value.author
           : author // ignore: cast_nullable_to_non_nullable
               as String?,
+      isDraft: isDraft == freezed
+          ? _value.isDraft
+          : isDraft // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -188,7 +203,8 @@ class _$_Article implements _Article {
       this.cover,
       this.thumbnail,
       this.content,
-      this.author});
+      this.author,
+      this.isDraft = false});
 
   factory _$_Article.fromJson(Map<String, dynamic> json) =>
       _$_$_ArticleFromJson(json);
@@ -205,10 +221,13 @@ class _$_Article implements _Article {
   final String? content;
   @override
   final String? author;
+  @JsonKey(defaultValue: false)
+  @override
+  final bool isDraft;
 
   @override
   String toString() {
-    return 'Article(id: $id, title: $title, cover: $cover, thumbnail: $thumbnail, content: $content, author: $author)';
+    return 'Article(id: $id, title: $title, cover: $cover, thumbnail: $thumbnail, content: $content, author: $author, isDraft: $isDraft)';
   }
 
   @override
@@ -228,7 +247,9 @@ class _$_Article implements _Article {
                 const DeepCollectionEquality()
                     .equals(other.content, content)) &&
             (identical(other.author, author) ||
-                const DeepCollectionEquality().equals(other.author, author)));
+                const DeepCollectionEquality().equals(other.author, author)) &&
+            (identical(other.isDraft, isDraft) ||
+                const DeepCollectionEquality().equals(other.isDraft, isDraft)));
   }
 
   @override
@@ -239,7 +260,8 @@ class _$_Article implements _Article {
       const DeepCollectionEquality().hash(cover) ^
       const DeepCollectionEquality().hash(thumbnail) ^
       const DeepCollectionEquality().hash(content) ^
-      const DeepCollectionEquality().hash(author);
+      const DeepCollectionEquality().hash(author) ^
+      const DeepCollectionEquality().hash(isDraft);
 
   @JsonKey(ignore: true)
   @override
@@ -259,7 +281,8 @@ abstract class _Article implements Article {
       String? cover,
       String? thumbnail,
       String? content,
-      String? author}) = _$_Article;
+      String? author,
+      bool isDraft}) = _$_Article;
 
   factory _Article.fromJson(Map<String, dynamic> json) = _$_Article.fromJson;
 
@@ -275,6 +298,8 @@ abstract class _Article implements Article {
   String? get content => throw _privateConstructorUsedError;
   @override
   String? get author => throw _privateConstructorUsedError;
+  @override
+  bool get isDraft => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$ArticleCopyWith<_Article> get copyWith =>

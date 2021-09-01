@@ -7,6 +7,7 @@ enum AppPage {
   settings,
   editor,
   signIn,
+  drafts,
 }
 
 extension AppPageName on AppPage {
@@ -20,6 +21,7 @@ extension AppPageName on AppPage {
       case AppPage.settings:
       case AppPage.editor:
       case AppPage.signIn:
+      case AppPage.drafts:
         return toString().split('.').last;
       default:
         return '404';

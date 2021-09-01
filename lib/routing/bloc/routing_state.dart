@@ -4,7 +4,7 @@ part 'routing_state.freezed.dart';
 part 'routing_state.g.dart';
 
 @freezed
-abstract class RoutingState with _$RoutingState {
+class RoutingState with _$RoutingState {
   factory RoutingState({
     @Default(false) final bool isSplashScreenOver,
     @Default('') final String location,

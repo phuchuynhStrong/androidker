@@ -1,3 +1,6 @@
+import 'package:androiker/routing/app_link.dart';
+import 'package:androiker/routing/app_pages.dart';
+import 'package:androiker/routing/bloc/routing_bloc.dart';
 import 'package:authentication/di/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +20,11 @@ class HomeNavBarEditorBtn extends StatelessWidget {
         color: theme.colorScheme.onPrimary,
         iconSize: IconSizes.med,
         onPressed: () {
-          Scaffold.of(context).openDrawer();
+          context.read<RoutingBloc>().navigate(
+                AppLink(
+                  pageId: AppPage.drafts.name,
+                ),
+              );
         },
       );
     }

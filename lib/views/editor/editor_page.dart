@@ -4,23 +4,64 @@ import 'package:androiker/core_packages.dart';
 import 'package:androiker/di/component/article_component.dart';
 import 'package:articles/model/article.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 
-class EditorPage extends StatefulWidget {
-  const EditorPage({Key? key}) : super(key: key);
+import 'bloc/bloc.dart';
+import 'bloc/state.dart';
+
+class EditorPage extends StatelessWidget {
+  final String? draftId;
+  const EditorPage({Key? key, this.draftId}) : super(key: key);
 
   @override
-  _EditorPageState createState() => _EditorPageState();
+  Widget build(BuildContext context) {
+    return BlocProvider<EditorPageBloc>(
+      create: (context) => EditorPageBloc(
+        id: draftId,
+        articleRepository: context.read<ArticleComponent>().module?.repository,
+      ),
+      child: BlocBuilder<EditorPageBloc, EditorPageState>(
+        builder: (context, state) {
+          if (draftId == null) {
+            return EditorPageWidget(state: state);
+          }
+
+          if (draftId != null && state.executed && state.data != null) {
+            return EditorPageWidget(state: state);
+          }
+
+          return Container();
+        },
+      ),
+    );
+  }
 }
 
-class _EditorPageState extends State<EditorPage> {
+class EditorPageWidget extends StatefulWidget {
+  final EditorPageState? state;
+  const EditorPageWidget({Key? key, this.state}) : super(key: key);
+
+  @override
+  _EditorPageWidgetState createState() => _EditorPageWidgetState();
+}
+
+class _EditorPageWidgetState extends State<EditorPageWidget> {
   late final QuillController _controller;
   late final FocusNode _focusNode;
 
   @override
   void initState() {
     super.initState();
-    _controller = QuillController.basic();
+    if (widget.state?.data == null) {
+      _controller = QuillController.basic();
+    } else {
+      _controller = QuillController(
+        document: Document.fromJson(jsonDecode(widget.state!.data!.content!)),
+        selection: const TextSelection.collapsed(offset: 0),
+      );
+    }
+
     _focusNode = FocusNode();
   }
 
@@ -34,6 +75,8 @@ class _EditorPageState extends State<EditorPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final bloc = context.read<EditorPageBloc>();
+    final isSaving = bloc.isSaving();
     return AndroidkerScaffold(
       windowTitleText: "Editor",
       body: TextSelectionTheme(
@@ -61,62 +104,151 @@ class _EditorPageState extends State<EditorPage> {
                 margin: EdgeInsets.symmetric(
                   vertical: Insets.lg,
                 ),
-                child: OutlinedButton(
-                  style: ButtonStyle(
-                    padding:
-                        MaterialStateProperty.all(EdgeInsets.all(Insets.lg)),
-                    side: MaterialStateBorderSide.resolveWith(
-                      (states) => BorderSide(
-                        width: 2.0,
-                        color: theme.colorScheme.onBackground,
-                      ),
-                    ),
-                    shape: MaterialStateProperty.resolveWith(
-                      (states) => const RoundedRectangleBorder(
-                        borderRadius: Corners.mdBorder,
-                      ),
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(
-                          right: Insets.lg,
-                        ),
-                        child: Icon(
-                          Icons.save,
-                          size: IconSizes.med,
-                          color: theme.colorScheme.onBackground,
-                        ),
-                      ),
-                      RichText(
-                        text: TextSpan(
-                          text: "Save draft",
-                          style: GoogleFonts.montserrat(
-                            fontSize: 18,
-                            height: 24 / 18,
-                            fontWeight: FontWeight.w500,
+                child: Row(
+                  children: [
+                    OutlinedButton(
+                      style: ButtonStyle(
+                        padding: MaterialStateProperty.all(
+                            EdgeInsets.all(Insets.lg)),
+                        side: MaterialStateBorderSide.resolveWith(
+                          (states) => BorderSide(
+                            width: 2.0,
                             color: theme.colorScheme.onBackground,
                           ),
                         ),
-                      )
-                    ],
-                  ),
-                  onPressed: () {
-                    context
-                        .read<ArticleComponent>()
-                        .module
-                        ?.repository
-                        ?.saveArticle(
-                          Article(
+                        shape: MaterialStateProperty.resolveWith(
+                          (states) => const RoundedRectangleBorder(
+                            borderRadius: Corners.mdBorder,
+                          ),
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          if (!isSaving) ...[
+                            Container(
+                              margin: EdgeInsets.only(
+                                right: Insets.lg,
+                              ),
+                              child: Icon(
+                                Icons.save,
+                                size: IconSizes.med,
+                                color: theme.colorScheme.onBackground,
+                              ),
+                            ),
+                            RichText(
+                              text: TextSpan(
+                                text: "Save draft",
+                                style: GoogleFonts.montserrat(
+                                  fontSize: 18,
+                                  height: 24 / 18,
+                                  fontWeight: FontWeight.w500,
+                                  color: theme.colorScheme.onBackground,
+                                ),
+                              ),
+                            )
+                          ],
+                          if (isSaving) ...[
+                            SizedBox.fromSize(
+                              size: const Size.square(24),
+                              child: CircularProgressIndicator(
+                                color: theme.colorScheme.onBackground,
+                                strokeWidth: 1,
+                              ),
+                            ),
+                          ]
+                        ],
+                      ),
+                      onPressed: () {
+                        Article data;
+                        if (widget.state?.data != null) {
+                          data = widget.state!.data!.copyWith.call(
+                            content: jsonEncode(
+                                _controller.document.toDelta().toJson()),
+                          );
+                        } else {
+                          data = Article(
+                            title: "Test 2",
+                            author: "Androidker",
+                            content: jsonEncode(
+                                _controller.document.toDelta().toJson()),
+                          );
+                        }
+                        bloc.saveArticle(data);
+                      },
+                    ),
+                    OutlinedButton(
+                      style: ButtonStyle(
+                        padding: MaterialStateProperty.all(
+                            EdgeInsets.all(Insets.lg)),
+                        side: MaterialStateBorderSide.resolveWith(
+                          (states) => BorderSide(
+                            width: 2.0,
+                            color: theme.colorScheme.onBackground,
+                          ),
+                        ),
+                        shape: MaterialStateProperty.resolveWith(
+                          (states) => const RoundedRectangleBorder(
+                            borderRadius: Corners.mdBorder,
+                          ),
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          if (!isSaving) ...[
+                            Container(
+                              margin: EdgeInsets.only(
+                                right: Insets.lg,
+                              ),
+                              child: Icon(
+                                Icons.public,
+                                size: IconSizes.med,
+                                color: theme.colorScheme.onBackground,
+                              ),
+                            ),
+                            RichText(
+                              text: TextSpan(
+                                text: "Publish",
+                                style: GoogleFonts.montserrat(
+                                  fontSize: 18,
+                                  height: 24 / 18,
+                                  fontWeight: FontWeight.w500,
+                                  color: theme.colorScheme.onBackground,
+                                ),
+                              ),
+                            )
+                          ],
+                          if (isSaving) ...[
+                            SizedBox.fromSize(
+                              size: const Size.square(24),
+                              child: CircularProgressIndicator(
+                                color: theme.colorScheme.onBackground,
+                                strokeWidth: 1,
+                              ),
+                            ),
+                          ]
+                        ],
+                      ),
+                      onPressed: () {
+                        Article data;
+                        if (widget.state?.data != null) {
+                          data = widget.state!.data!.copyWith.call(
+                            content: jsonEncode(
+                                _controller.document.toDelta().toJson()),
+                          );
+                        } else {
+                          data = Article(
                             title: "Test",
                             author: "Androidker",
                             content: jsonEncode(
                                 _controller.document.toDelta().toJson()),
-                          ),
-                        );
-                  },
+                          );
+                        }
+                        bloc.publishArticle(data.id);
+                      },
+                    ),
+                  ],
                 ),
               ),
             ],
