@@ -6,6 +6,7 @@ import 'package:androiker/routing/app_pages.dart';
 import 'package:androiker/routing/bloc/routing_bloc.dart';
 import 'package:androiker/routing/bloc/routing_state.dart';
 import 'package:androiker/views/blog/blog_page.dart';
+import 'package:androiker/views/blog/single_blog_page.dart';
 import 'package:androiker/views/drafts_list/drafts_list_page.dart';
 import 'package:androiker/views/editor/editor_page.dart';
 import 'package:androiker/views/home_page/home_page.dart';
@@ -54,6 +55,7 @@ class AppRouterDelegate extends RouterDelegate<AppLink> with ChangeNotifier {
     final showEditor = pageEnum == AppPage.editor;
     final showSignIn = pageEnum == AppPage.signIn;
     final showDrafts = pageEnum == AppPage.drafts;
+    final showArticle = pageEnum == AppPage.article;
     return Navigator(
       onPopPage: _handleNavigatorPop,
       pages: [
@@ -72,6 +74,11 @@ class AppRouterDelegate extends RouterDelegate<AppLink> with ChangeNotifier {
         if (showEditor) ...[
           EditorPage(
             draftId: currentConfiguration?.articleId,
+          ),
+        ],
+        if (showArticle) ...[
+          SingleBlogPageScreen(
+            id: currentConfiguration!.articleId!,
           ),
         ],
         if (showSignIn) ...[

@@ -32,6 +32,11 @@ class BlogPage extends StatelessWidget {
                 subHeader:
                     "Sharing knowledge is a good way to improve yourself",
               ),
+              Container(
+                width: double.infinity,
+                height: 0.5,
+                color: Colors.grey,
+              ),
               Expanded(
                 child: BlocBuilder<BlogPageBloc, BlogPageState>(
                   builder: (context, state) {
@@ -63,7 +68,7 @@ class BlogPage extends StatelessWidget {
                           onPressed: () {
                             context
                                 .read<BlogPageBloc>()
-                                .onArticleItemPressed(article);
+                                .onArticleItemPressed(context, article);
                           },
                         );
                       },

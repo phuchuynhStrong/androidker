@@ -35,19 +35,23 @@ class BlogItem extends StatelessWidget {
               child: Text(
                 article?.title ?? "Title",
                 style: GoogleFonts.montserrat(
-                  decoration: TextDecoration.underline,
                   fontSize: 15,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.bold,
                   color: theme.colorScheme.onBackground,
                 ),
               ),
             ),
-            Text(
-              article?.author ?? "Unknown",
-              style: GoogleFonts.montserrat(
-                fontSize: 12,
-                color: theme.colorScheme.onBackground.withOpacity(0.7),
-              ),
+            Row(
+              children: [
+                Text(
+                  "Posted 28 Aug, 2021",
+                  style: GoogleFonts.montserrat(
+                    fontSize: 12,
+                    color: theme.colorScheme.onBackground.withOpacity(0.7),
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
+              ],
             ),
           ],
         ),

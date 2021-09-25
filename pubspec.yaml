@@ -39,7 +39,7 @@ dependencies:
   logger: ^1.0.0
   native_pdf_view: any
   sized_context: ^1.0.0+1
-  bloc: ^7.1.0
+  bloc: ^7.2.0
   flutter_bloc: ^7.1.0
   flutter_svg: ^0.22.0
   rive: ^0.7.22

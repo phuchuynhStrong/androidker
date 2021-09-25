@@ -177,6 +177,7 @@ class _QuillSimpleViewerState extends State<QuillSimpleViewer>
                             child: child)))));
       } else {
         child = Container(
+            color: Colors.white10,
             height: widget.truncateHeight,
             width: widget.truncateWidth,
             child: SingleChildScrollView(
