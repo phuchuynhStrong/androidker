@@ -4,6 +4,7 @@ import 'package:androiker/routing/app_pages.dart';
 import 'package:equatable/equatable.dart';
 
 // Inspired from flutter-folio
+// ignore: must_be_immutable
 class AppLink extends Equatable {
   static const String kArticleParam = "article";
   static const String kPageParam = "page";

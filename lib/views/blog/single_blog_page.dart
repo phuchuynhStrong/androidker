@@ -1,14 +1,12 @@
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:androiker/di/component/app_component.dart';
 import 'package:androiker/di/component/article_component.dart';
 import 'package:androiker/styled_widgets/androidker_scaffold.dart';
 import 'package:articles/model/article.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_quill/flutter_quill.dart' as quill;
-import 'package:flutter_quill/widgets/default_styles.dart';
 import 'package:flutter_quill/widgets/simple_viewer.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -91,7 +89,7 @@ class _SingleBlogPageWidgetState extends State<SingleBlogPageWidget> {
           child: Container(
             width: screenWidth,
             alignment: Alignment.center,
-            child: Container(
+            child: SizedBox(
               width: viewerWidth,
               child: Column(
                 mainAxisSize: MainAxisSize.min,

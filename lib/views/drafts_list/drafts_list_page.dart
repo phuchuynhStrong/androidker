@@ -1,6 +1,5 @@
 import 'package:androiker/core_packages.dart';
 import 'package:androiker/di/component/article_component.dart';
-import 'package:androiker/di/component/auth_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -36,7 +35,7 @@ class DraftsListContent extends StatelessWidget {
         if (state.isFetching) {
           return Center(
             child: SizedBox.fromSize(
-              size: Size.square(24.0),
+              size: const Size.square(24.0),
               child: CircularProgressIndicator(
                 color: theme.colorScheme.onBackground,
                 strokeWidth: 1.0,
