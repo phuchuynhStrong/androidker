@@ -68,5 +68,7 @@ K? _$enumDecodeNullable<K, V>(
 const _$EditorPageEventEnumMap = {
   EditorPageEvent.fetch: 'fetch',
   EditorPageEvent.update: 'update',
+  EditorPageEvent.create: 'create',
+  EditorPageEvent.publish: 'publish',
   EditorPageEvent.none: 'none',
 };

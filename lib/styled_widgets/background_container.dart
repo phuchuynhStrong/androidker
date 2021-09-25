@@ -57,6 +57,7 @@ class _DarkBackgroundContainer extends StatelessWidget {
           fit: BoxFit.cover,
           colorFilter: ColorFilter.mode(Colors.black54, BlendMode.darken),
         ),
+        // color: Color.fromRGBO(35, 35, 37, 1.0),
       ),
       child: child ?? const SizedBox(),
     );

@@ -238,3 +238,244 @@ abstract class _BlogPageState implements BlogPageState {
   _$BlogPageStateCopyWith<_BlogPageState> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+SingleBlogPageState _$SingleBlogPageStateFromJson(Map<String, dynamic> json) {
+  return _SingleBlogPageState.fromJson(json);
+}
+
+/// @nodoc
+class _$SingleBlogPageStateTearOff {
+  const _$SingleBlogPageStateTearOff();
+
+  _SingleBlogPageState call(
+      {bool isFetching = false,
+      bool fetched = false,
+      Article? data,
+      String? errorMsg}) {
+    return _SingleBlogPageState(
+      isFetching: isFetching,
+      fetched: fetched,
+      data: data,
+      errorMsg: errorMsg,
+    );
+  }
+
+  SingleBlogPageState fromJson(Map<String, Object> json) {
+    return SingleBlogPageState.fromJson(json);
+  }
+}
+
+/// @nodoc
+const $SingleBlogPageState = _$SingleBlogPageStateTearOff();
+
+/// @nodoc
+mixin _$SingleBlogPageState {
+  bool get isFetching => throw _privateConstructorUsedError;
+  bool get fetched => throw _privateConstructorUsedError;
+  Article? get data => throw _privateConstructorUsedError;
+  String? get errorMsg => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $SingleBlogPageStateCopyWith<SingleBlogPageState> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $SingleBlogPageStateCopyWith<$Res> {
+  factory $SingleBlogPageStateCopyWith(
+          SingleBlogPageState value, $Res Function(SingleBlogPageState) then) =
+      _$SingleBlogPageStateCopyWithImpl<$Res>;
+  $Res call({bool isFetching, bool fetched, Article? data, String? errorMsg});
+
+  $ArticleCopyWith<$Res>? get data;
+}
+
+/// @nodoc
+class _$SingleBlogPageStateCopyWithImpl<$Res>
+    implements $SingleBlogPageStateCopyWith<$Res> {
+  _$SingleBlogPageStateCopyWithImpl(this._value, this._then);
+
+  final SingleBlogPageState _value;
+  // ignore: unused_field
+  final $Res Function(SingleBlogPageState) _then;
+
+  @override
+  $Res call({
+    Object? isFetching = freezed,
+    Object? fetched = freezed,
+    Object? data = freezed,
+    Object? errorMsg = freezed,
+  }) {
+    return _then(_value.copyWith(
+      isFetching: isFetching == freezed
+          ? _value.isFetching
+          : isFetching // ignore: cast_nullable_to_non_nullable
+              as bool,
+      fetched: fetched == freezed
+          ? _value.fetched
+          : fetched // ignore: cast_nullable_to_non_nullable
+              as bool,
+      data: data == freezed
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as Article?,
+      errorMsg: errorMsg == freezed
+          ? _value.errorMsg
+          : errorMsg // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+
+  @override
+  $ArticleCopyWith<$Res>? get data {
+    if (_value.data == null) {
+      return null;
+    }
+
+    return $ArticleCopyWith<$Res>(_value.data!, (value) {
+      return _then(_value.copyWith(data: value));
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$SingleBlogPageStateCopyWith<$Res>
+    implements $SingleBlogPageStateCopyWith<$Res> {
+  factory _$SingleBlogPageStateCopyWith(_SingleBlogPageState value,
+          $Res Function(_SingleBlogPageState) then) =
+      __$SingleBlogPageStateCopyWithImpl<$Res>;
+  @override
+  $Res call({bool isFetching, bool fetched, Article? data, String? errorMsg});
+
+  @override
+  $ArticleCopyWith<$Res>? get data;
+}
+
+/// @nodoc
+class __$SingleBlogPageStateCopyWithImpl<$Res>
+    extends _$SingleBlogPageStateCopyWithImpl<$Res>
+    implements _$SingleBlogPageStateCopyWith<$Res> {
+  __$SingleBlogPageStateCopyWithImpl(
+      _SingleBlogPageState _value, $Res Function(_SingleBlogPageState) _then)
+      : super(_value, (v) => _then(v as _SingleBlogPageState));
+
+  @override
+  _SingleBlogPageState get _value => super._value as _SingleBlogPageState;
+
+  @override
+  $Res call({
+    Object? isFetching = freezed,
+    Object? fetched = freezed,
+    Object? data = freezed,
+    Object? errorMsg = freezed,
+  }) {
+    return _then(_SingleBlogPageState(
+      isFetching: isFetching == freezed
+          ? _value.isFetching
+          : isFetching // ignore: cast_nullable_to_non_nullable
+              as bool,
+      fetched: fetched == freezed
+          ? _value.fetched
+          : fetched // ignore: cast_nullable_to_non_nullable
+              as bool,
+      data: data == freezed
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as Article?,
+      errorMsg: errorMsg == freezed
+          ? _value.errorMsg
+          : errorMsg // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_SingleBlogPageState implements _SingleBlogPageState {
+  _$_SingleBlogPageState(
+      {this.isFetching = false,
+      this.fetched = false,
+      this.data,
+      this.errorMsg});
+
+  factory _$_SingleBlogPageState.fromJson(Map<String, dynamic> json) =>
+      _$_$_SingleBlogPageStateFromJson(json);
+
+  @JsonKey(defaultValue: false)
+  @override
+  final bool isFetching;
+  @JsonKey(defaultValue: false)
+  @override
+  final bool fetched;
+  @override
+  final Article? data;
+  @override
+  final String? errorMsg;
+
+  @override
+  String toString() {
+    return 'SingleBlogPageState(isFetching: $isFetching, fetched: $fetched, data: $data, errorMsg: $errorMsg)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _SingleBlogPageState &&
+            (identical(other.isFetching, isFetching) ||
+                const DeepCollectionEquality()
+                    .equals(other.isFetching, isFetching)) &&
+            (identical(other.fetched, fetched) ||
+                const DeepCollectionEquality()
+                    .equals(other.fetched, fetched)) &&
+            (identical(other.data, data) ||
+                const DeepCollectionEquality().equals(other.data, data)) &&
+            (identical(other.errorMsg, errorMsg) ||
+                const DeepCollectionEquality()
+                    .equals(other.errorMsg, errorMsg)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(isFetching) ^
+      const DeepCollectionEquality().hash(fetched) ^
+      const DeepCollectionEquality().hash(data) ^
+      const DeepCollectionEquality().hash(errorMsg);
+
+  @JsonKey(ignore: true)
+  @override
+  _$SingleBlogPageStateCopyWith<_SingleBlogPageState> get copyWith =>
+      __$SingleBlogPageStateCopyWithImpl<_SingleBlogPageState>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$_$_SingleBlogPageStateToJson(this);
+  }
+}
+
+abstract class _SingleBlogPageState implements SingleBlogPageState {
+  factory _SingleBlogPageState(
+      {bool isFetching,
+      bool fetched,
+      Article? data,
+      String? errorMsg}) = _$_SingleBlogPageState;
+
+  factory _SingleBlogPageState.fromJson(Map<String, dynamic> json) =
+      _$_SingleBlogPageState.fromJson;
+
+  @override
+  bool get isFetching => throw _privateConstructorUsedError;
+  @override
+  bool get fetched => throw _privateConstructorUsedError;
+  @override
+  Article? get data => throw _privateConstructorUsedError;
+  @override
+  String? get errorMsg => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$SingleBlogPageStateCopyWith<_SingleBlogPageState> get copyWith =>
+      throw _privateConstructorUsedError;
+}

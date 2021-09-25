@@ -1,3 +1,6 @@
+import 'package:androiker/routing/app_link.dart';
+import 'package:androiker/routing/app_pages.dart';
+import 'package:androiker/routing/bloc/routing_bloc.dart';
 import 'package:articles/di/article_repository.dart';
 import 'package:articles/model/article.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +27,14 @@ class BlogPageBloc extends Bloc<BlogPageEvent, BlogPageState> {
 
   void fetch() => add(BlogPageEvent.fetch);
 
-  void onArticleItemPressed(Article article) {}
+  void onArticleItemPressed(BuildContext context, Article article) {
+    context.read<RoutingBloc>().navigate(
+          AppLink(
+            pageId: AppPage.article.name,
+            articleId: article.id,
+          ),
+        );
+  }
 
   @override
   Stream<BlogPageState> mapEventToState(BlogPageEvent event) async* {
@@ -50,6 +60,43 @@ class BlogPageBloc extends Bloc<BlogPageEvent, BlogPageState> {
         yield nextState;
         break;
       default:
+    }
+  }
+}
+
+enum SingleBlogPageEvent { fetch, none }
+
+class SingleBlogPageBloc
+    extends Bloc<SingleBlogPageEvent, SingleBlogPageState> {
+  final String id;
+  final ArticleRepository _articleRepository;
+  SingleBlogPageBloc(
+      {required this.id, @required ArticleRepository? articleRepository})
+      : assert(articleRepository != null),
+        _articleRepository = articleRepository!,
+        super(SingleBlogPageState.initial()) {
+    add(SingleBlogPageEvent.fetch);
+  }
+
+  @override
+  Stream<SingleBlogPageState> mapEventToState(
+      SingleBlogPageEvent event) async* {
+    if (event == SingleBlogPageEvent.fetch) {
+      yield state.copyWith.call(
+        isFetching: true,
+      );
+      final nextState = await _articleRepository
+          .getArticle(id)
+          .then((value) => state.copyWith.call(
+                isFetching: false,
+                fetched: true,
+                data: value,
+              ))
+          .catchError((error) => state.copyWith.call(
+                isFetching: false,
+                errorMsg: error.toString(),
+              ));
+      yield nextState;
     }
   }
 }

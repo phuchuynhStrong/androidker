@@ -16,3 +16,16 @@ class BlogPageState with _$BlogPageState {
       _$BlogPageStateFromJson(json);
   factory BlogPageState.initial() => BlogPageState.fromJson({});
 }
+
+@freezed
+class SingleBlogPageState with _$SingleBlogPageState {
+  factory SingleBlogPageState({
+    @Default(false) final bool isFetching,
+    @Default(false) final bool fetched,
+    final Article? data,
+    final String? errorMsg,
+  }) = _SingleBlogPageState;
+  factory SingleBlogPageState.fromJson(Map<String, dynamic> json) =>
+      _$SingleBlogPageStateFromJson(json);
+  factory SingleBlogPageState.initial() => SingleBlogPageState.fromJson({});
+}
