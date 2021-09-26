@@ -14,6 +14,9 @@ _$_Article _$_$_ArticleFromJson(Map<String, dynamic> json) {
     thumbnail: json['thumbnail'] as String?,
     content: json['content'] as String?,
     author: json['author'] as String?,
+    createdAt: json['createdAt'] == null
+        ? null
+        : DateTime.parse(json['createdAt'] as String),
     isDraft: json['isDraft'] as bool? ?? false,
   );
 }
@@ -26,5 +29,6 @@ Map<String, dynamic> _$_$_ArticleToJson(_$_Article instance) =>
       'thumbnail': instance.thumbnail,
       'content': instance.content,
       'author': instance.author,
+      'createdAt': instance.createdAt?.toIso8601String(),
       'isDraft': instance.isDraft,
     };

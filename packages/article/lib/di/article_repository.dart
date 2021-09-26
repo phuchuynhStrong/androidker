@@ -108,9 +108,7 @@ class ArticleRepository {
         .then(
           (abc) => _firebaseFirestore!
               .collection(getCollectionPath(ArticleType.published))
-              .add(
-                article.toJson(),
-              ),
+              .add(article.copyWith(createdAt: DateTime.now()).toJson()),
         )
         .then((value) => true)
         .catchError(

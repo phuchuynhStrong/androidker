@@ -1,4 +1,5 @@
 import 'package:androiker/core_packages.dart';
+import 'package:androiker/utilities/date.dart';
 import 'package:articles/model/article.dart';
 import 'package:flutter/material.dart';
 
@@ -43,14 +44,15 @@ class BlogItem extends StatelessWidget {
             ),
             Row(
               children: [
-                Text(
-                  "Posted 28 Aug, 2021",
-                  style: GoogleFonts.montserrat(
-                    fontSize: 12,
-                    color: theme.colorScheme.onBackground.withOpacity(0.7),
-                    fontWeight: FontWeight.w300,
+                if (article?.createdAt != null)
+                  Text(
+                    "Posted ${formatArticlePublishTime(article?.createdAt)}",
+                    style: GoogleFonts.montserrat(
+                      fontSize: 12,
+                      color: theme.colorScheme.onBackground.withOpacity(0.7),
+                      fontWeight: FontWeight.w300,
+                    ),
                   ),
-                ),
               ],
             ),
           ],
