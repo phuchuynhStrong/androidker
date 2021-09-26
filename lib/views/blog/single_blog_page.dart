@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:androiker/di/component/article_component.dart';
 import 'package:androiker/styled_widgets/androidker_scaffold.dart';
+import 'package:androiker/utilities/date.dart';
 import 'package:articles/model/article.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -121,7 +122,7 @@ class _SingleBlogPageWidgetState extends State<SingleBlogPageWidget> {
                     child: Row(
                       children: [
                         Text(
-                          "Posted on Aug 28, 2021",
+                          "Posted ${formatArticlePublishTime(widget.article.createdAt)}",
                           style: GoogleFonts.montserrat(
                             fontSize: 15,
                             fontWeight: FontWeight.w500,
